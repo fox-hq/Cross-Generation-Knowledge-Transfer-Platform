@@ -22,11 +22,11 @@ export function HeroSection() {
               <span>Connecting Generations Through Knowledge</span>
             </div>
             
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-100 to-blue-100">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-100 to-blue-100 tracking-tight">
               Preserve Wisdom, Share Skills, Build Legacy
             </h1>
             
-            <p className="text-lg md:text-xl text-blue-50/90 mb-8 leading-relaxed">
+            <p className="text-lg md:text-xl text-blue-50/90 mb-8 leading-relaxed max-w-2xl">
               Connect with masters who've perfected their craft over decades. Learn authentic skills, preserve cultural techniques, and become part of a living tradition.
             </p>
             
@@ -74,7 +74,7 @@ export function HeroSection() {
       {/* Decorative wave */}
       <div className="absolute bottom-0 left-0 right-0">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full">
-          <path fill="#ffffff" fillOpacity="1" d="M0,160L48,144C96,128,192,96,288,106.7C384,117,480,171,576,186.7C672,203,768,181,864,154.7C960,128,1056,96,1152,90.7C1248,85,1344,107,1392,117.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+          <path fill="#09090b" fillOpacity="1" d="M0,160L48,144C96,128,192,96,288,106.7C384,117,480,171,576,186.7C672,203,768,181,864,154.7C960,128,1056,96,1152,90.7C1248,85,1344,107,1392,117.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
         </svg>
       </div>
     </section>
