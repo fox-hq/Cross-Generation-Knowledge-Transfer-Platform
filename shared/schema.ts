@@ -1,6 +1,7 @@
-import { pgTable, text, serial, integer, numeric, timestamp, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, numeric, timestamp, boolean, primaryKey } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
+import { relations } from "drizzle-orm";
 
 // User schema
 export const users = pgTable("users", {
@@ -155,6 +156,71 @@ export const insertShowcaseSchema = createInsertSchema(showcases).pick({
   description: true,
   imageUrl: true,
 });
+
+// Relations
+export const usersRelations = relations(users, ({ many }) => ({
+  courses: many(courses),
+  mentorships: many(mentorships),
+  transcriptions: many(transcriptions),
+  products: many(products),
+  discussions: many(discussions),
+  replies: many(replies),
+  showcases: many(showcases),
+}));
+
+export const coursesRelations = relations(courses, ({ one }) => ({
+  instructor: one(users, {
+    fields: [courses.instructorId],
+    references: [users.id],
+  }),
+}));
+
+export const mentorshipsRelations = relations(mentorships, ({ one }) => ({
+  mentor: one(users, {
+    fields: [mentorships.mentorId],
+    references: [users.id],
+  }),
+}));
+
+export const transcriptionsRelations = relations(transcriptions, ({ one }) => ({
+  user: one(users, {
+    fields: [transcriptions.userId],
+    references: [users.id],
+  }),
+}));
+
+export const productsRelations = relations(products, ({ one }) => ({
+  seller: one(users, {
+    fields: [products.sellerId],
+    references: [users.id],
+  }),
+}));
+
+export const discussionsRelations = relations(discussions, ({ one, many }) => ({
+  user: one(users, {
+    fields: [discussions.userId],
+    references: [users.id],
+  }),
+  replies: many(replies),
+}));
+
+export const repliesRelations = relations(replies, ({ one }) => ({
+  discussion: one(discussions, {
+    fields: [replies.discussionId],
+    references: [discussions.id],
+  }),
+  user: one(users, {
+    fields: [replies.userId],
+    references: [users.id],
+  }),
+}));
+
+export const showcasesRelations = relations(showcases, ({ one }) => ({
+  user: one(users, {
+    fields: [showcases.userId],
+    references: [users.id],
+  }),
+}));
 
 // Type definitions
 export type InsertUser = z.infer<typeof insertUserSchema>;
