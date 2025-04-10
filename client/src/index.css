@@ -10,4 +10,104 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight;
+  }
+}
+
+@layer utilities {
+  /* Gradient animations */
+  .animate-gradient-x {
+    animation: gradient-x 15s ease infinite;
+    background-size: 400% 400%;
+  }
+
+  .animate-gradient-y {
+    animation: gradient-y 15s ease infinite;
+    background-size: 400% 400%;
+  }
+  
+  /* Card hover effects */
+  .card-hover {
+    transition: all 0.3s ease;
+  }
+  
+  .card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  }
+
+  /* Text gradient effects */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r;
+  }
+  
+  .text-gradient-primary {
+    @apply text-gradient from-primary-500 via-primary-400 to-primary-600;
+  }
+  
+  .text-gradient-purple {
+    @apply text-gradient from-purple-600 via-pink-500 to-indigo-500;
+  }
+  
+  /* Modern glass effect */
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+  
+  .glass-dark {
+    @apply bg-black/30 backdrop-blur-md border border-white/10;
+  }
+}
+
+@keyframes gradient-x {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes gradient-y {
+  0% {
+    background-position: 50% 0%;
+  }
+  50% {
+    background-position: 50% 100%;
+  }
+  100% {
+    background-position: 50% 0%;
+  }
+}
+
+/* Modern card styles */
+.modern-card {
+  @apply rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl bg-white dark:bg-neutral-900;
+}
+
+/* Video controls styling */
+video::-webkit-media-controls {
+  @apply bg-black/30 backdrop-blur-sm rounded-lg;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-neutral-100 dark:bg-neutral-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/30 dark:bg-primary/70 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary/50 dark:bg-primary/90;
 }
