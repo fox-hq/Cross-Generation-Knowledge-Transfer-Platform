@@ -174,3 +174,73 @@ video::-webkit-media-controls {
 img {
   @apply object-cover w-full h-full rounded-lg;
 }
+
+/* Modern card design from UIverse.io */
+.card {
+  @apply relative w-full max-w-md mx-auto overflow-hidden rounded-2xl;
+  height: 400px;
+  transition: all 0.5s ease;
+  background: linear-gradient(170deg, rgba(58, 56, 86, 0.9) 0%, rgb(31, 31, 53) 100%);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 25px rgba(91, 69, 196, 0.45);
+}
+
+.card .content {
+  @apply p-6 absolute bottom-0 left-0 right-0 z-10;
+  height: 200px;
+  transition: all 0.5s ease;
+  backdrop-filter: blur(5px);
+  background: linear-gradient(to top, rgba(31, 31, 53, 1), rgba(31, 31, 53, 0.7), transparent);
+}
+
+.card:hover .content {
+  height: 100%;
+  background: linear-gradient(to top, rgba(31, 31, 53, 1), rgba(31, 31, 53, 0.95));
+}
+
+.card .content .heading {
+  @apply text-2xl font-bold text-white mb-3;
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.card .content .para {
+  @apply text-base text-neutral-300 font-normal leading-relaxed opacity-0 mb-5;
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  max-height: 0;
+  transition: all 0.5s ease;
+}
+
+.card:hover .content .para {
+  @apply opacity-100;
+  max-height: 200px;
+}
+
+.card .content .btn {
+  @apply bg-primary hover:bg-primary/90 py-2 px-5 rounded-lg text-white font-medium;
+  transition: all 0.3s ease;
+  transform: translateY(40px);
+  opacity: 0;
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.card:hover .content .btn {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Improve text rendering */
+* {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Font stack for better cross-platform compatibility */
+body, p, h1, h2, h3, h4, h5, h6, button, input, select, textarea {
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+}
