@@ -33,7 +33,7 @@ export function FeaturedCourses() {
   if (error) return <div className="text-center text-red-500 py-10">{error}</div>;
 
   return (
-    <section className="py-16 bg-neutral-950">
+    <section className="py-16" style={{ backgroundColor: 'rgba(9,9,11,255)' }}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <Badge variant="outline" className="mb-4 px-3 py-1 border-primary/40 bg-primary/10 text-primary">
