@@ -9,10 +9,37 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    @apply bg-neutral-950;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply tracking-tight;
+    @apply tracking-tight text-white;
+  }
+  
+  p {
+    @apply text-neutral-300;
+  }
+  
+  /* Dark mode by default */
+  :root {
+    --background: 0 0% 5%;
+    --foreground: 0 0% 95%;
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 95%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 0 0% 12%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 0 0% 70%;
   }
 }
 
@@ -49,11 +76,11 @@
   
   /* Modern glass effect */
   .glass {
-    @apply bg-white/10 backdrop-blur-md border border-white/20;
+    @apply bg-neutral-900/30 backdrop-blur-md border border-neutral-800/50;
   }
   
   .glass-dark {
-    @apply bg-black/30 backdrop-blur-md border border-white/10;
+    @apply bg-black/60 backdrop-blur-md border border-neutral-800;
   }
 }
 
@@ -83,7 +110,7 @@
 
 /* Modern card styles */
 .modern-card {
-  @apply rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl bg-white dark:bg-neutral-900;
+  @apply rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl bg-neutral-900/80 border border-neutral-800 backdrop-blur-sm;
 }
 
 /* Video controls styling */
@@ -97,13 +124,53 @@ video::-webkit-media-controls {
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-neutral-100 dark:bg-neutral-800;
+  @apply bg-neutral-900;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-primary/30 dark:bg-primary/70 rounded-full;
+  @apply bg-primary/70 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-primary/50 dark:bg-primary/90;
+  @apply bg-primary/90;
+}
+
+/* Additional dark theme elements */
+.card, .card-header, .card-content, .card-footer {
+  @apply bg-neutral-900 text-white border-neutral-800;
+}
+
+.badge {
+  @apply bg-neutral-800 text-white;
+}
+
+.dropdown-content, .select-content, .popover-content {
+  @apply bg-neutral-900 border-neutral-800;
+}
+
+/* Make sure buttons stand out on dark backgrounds */
+.btn-primary {
+  @apply bg-primary hover:bg-primary/90 text-white;
+}
+
+.btn-secondary {
+  @apply bg-neutral-800 hover:bg-neutral-700 text-white border-neutral-700;
+}
+
+/* Fix for text in cards and elements */
+.card-title {
+  @apply text-white font-medium;
+}
+
+.card-subtitle, .card-description {
+  @apply text-neutral-300;
+}
+
+.price-tag {
+  @apply text-primary font-bold;
+}
+
+/* Make all images render properly with proper contrast */
+img {
+  @apply object-cover w-full h-full rounded-lg;
 }
