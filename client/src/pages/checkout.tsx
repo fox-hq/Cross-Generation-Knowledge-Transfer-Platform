@@ -144,88 +144,139 @@ export default function Checkout() {
   }
 
   return (
-    <div className="bg-neutral-50 min-h-screen py-8">
+    <div className="min-h-screen bg-gradient-to-b from-white to-neutral-50 py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto">
-          <Link href="/marketplace" className="inline-flex items-center text-primary hover:text-primary-700 mb-6">
-            <ArrowLeft className="mr-2 h-4 w-4" /> Back to marketplace
-          </Link>
+        <div className="max-w-4xl mx-auto">
+          <div className="flex justify-between items-center mb-8">
+            <Link href="/marketplace" className="inline-flex items-center text-primary hover:text-primary-600 hover:underline transition">
+              <ArrowLeft className="mr-2 h-4 w-4" /> Back to marketplace
+            </Link>
+            <div className="text-right">
+              <div className="text-sm text-neutral-500">Secure Payment</div>
+              <div className="flex items-center space-x-2 mt-1">
+                <svg className="h-5 w-auto" viewBox="0 0 60 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="60" height="40" rx="4" fill="#252525"/>
+                  <path fillRule="evenodd" clipRule="evenodd" d="M30 28C33.866 28 37 24.866 37 21C37 17.134 33.866 14 30 14C26.134 14 23 17.134 23 21C23 24.866 26.134 28 30 28Z" fill="#EB001B"/>
+                  <path fillRule="evenodd" clipRule="evenodd" d="M30 28C33.866 28 37 24.866 37 21C37 17.134 33.866 14 30 14C26.134 14 23 17.134 23 21C23 24.866 26.134 28 30 28Z" fill="#F79E1B" fillOpacity="0.8"/>
+                </svg>
+                <svg className="h-5 w-auto" viewBox="0 0 60 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="60" height="40" rx="4" fill="#016FD0"/>
+                  <path fillRule="evenodd" clipRule="evenodd" d="M23 26H37V16H23V26Z" fill="white"/>
+                </svg>
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.249-8.25-3.286z" />
+                </svg>
+              </div>
+            </div>
+          </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-7 gap-8">
-            <div className="lg:col-span-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Payment Information</CardTitle>
-                  <CardDescription>Enter your payment details to complete your purchase</CardDescription>
-                </CardHeader>
-                <CardContent>
+          <h1 className="text-3xl font-bold text-center mb-10 text-gradient-primary">Complete Your Purchase</h1>
+          
+          <div className="bg-white shadow-xl rounded-2xl overflow-hidden border border-neutral-100">
+            <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-neutral-100">
+              {/* Payment Section */}
+              <div className="lg:col-span-7 p-6 md:p-8">
+                <div className="mb-6">
+                  <h2 className="text-xl font-bold text-neutral-900 mb-1">Payment Information</h2>
+                  <p className="text-neutral-500 text-sm">All transactions are secure and encrypted</p>
+                </div>
+                
+                <div className="bg-neutral-50 p-6 rounded-xl mb-6">
                   {clientSecret ? (
-                    <Elements stripe={stripePromise} options={{ clientSecret, appearance: { theme: 'stripe' } }}>
+                    <Elements stripe={stripePromise} options={{ 
+                      clientSecret, 
+                      appearance: { 
+                        theme: 'stripe',
+                        variables: {
+                          colorPrimary: '#9333ea',
+                          colorBackground: '#f9fafb',
+                          colorText: '#1f2937',
+                          colorDanger: '#ef4444',
+                          fontFamily: 'ui-sans-serif, system-ui, sans-serif',
+                          borderRadius: '8px',
+                          spacingUnit: '4px',
+                        }
+                      } 
+                    }}>
                       <CheckoutForm />
                     </Elements>
                   ) : (
-                    <div className="flex items-center justify-center py-6">
-                      <LoadingPage />
+                    <div className="flex items-center justify-center py-12">
+                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
                     </div>
                   )}
-                </CardContent>
-              </Card>
-            </div>
-            
-            <div className="lg:col-span-3">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Order Summary</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-start">
-                    <div className="w-16 h-16 bg-neutral-100 rounded-md overflow-hidden flex-shrink-0">
-                      <img 
-                        src="https://images.unsplash.com/photo-1605641532626-3b0dc8f038b9"
-                        alt="Hand-Forged Chef's Knife" 
-                        className="w-full h-full object-cover" 
-                      />
-                    </div>
-                    <div className="ml-4">
-                      <h3 className="font-medium text-neutral-900">Hand-Forged Chef's Knife</h3>
-                      <p className="text-sm text-neutral-500">Artisan #3</p>
-                      <div className="flex justify-between mt-1">
-                        <span className="text-sm text-neutral-600">Qty: 1</span>
-                        <span className="font-medium">$129.00</span>
+                </div>
+                
+                <div className="flex items-center space-x-2 text-sm text-neutral-500">
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                  </svg>
+                  <span>Your payment information is secure and encrypted</span>
+                </div>
+              </div>
+              
+              {/* Order Summary Section */}
+              <div className="lg:col-span-5 bg-neutral-50 p-6 md:p-8">
+                <h2 className="text-xl font-bold text-neutral-900 mb-6">Order Summary</h2>
+                
+                <div className="space-y-6">
+                  <div className="bg-white p-4 rounded-xl shadow-sm">
+                    <div className="flex items-start space-x-4">
+                      <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-neutral-100">
+                        <img 
+                          src="https://images.unsplash.com/photo-1605641532626-3b0dc8f038b9"
+                          alt="Hand-Forged Chef's Knife" 
+                          className="w-full h-full object-cover" 
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-medium text-neutral-900">Hand-Forged Chef's Knife</h3>
+                        <p className="text-sm text-neutral-600 mb-1">Traditional Blacksmith Crafted</p>
+                        <div className="flex justify-between">
+                          <span className="text-sm font-medium text-neutral-500">Qty: 1</span>
+                          <span className="font-semibold text-primary">$129.00</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                   
-                  <Separator />
-                  
-                  <div className="space-y-2 text-sm">
+                  <div className="space-y-3 text-sm">
                     <div className="flex justify-between">
                       <span className="text-neutral-600">Subtotal</span>
-                      <span>$129.00</span>
+                      <span className="font-medium">$129.00</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-neutral-600">Shipping</span>
-                      <span>$0.00</span>
+                      <span className="font-medium">Free</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-neutral-600">Tax</span>
-                      <span>$0.00</span>
+                      <span className="font-medium">$0.00</span>
+                    </div>
+                    
+                    <Separator className="my-3" />
+                    
+                    <div className="flex justify-between text-lg font-bold">
+                      <span>Total</span>
+                      <span className="text-primary">$129.00</span>
                     </div>
                   </div>
                   
-                  <Separator />
-                  
-                  <div className="flex justify-between font-medium">
-                    <span>Total</span>
-                    <span className="text-lg">$129.00</span>
+                  <div className="bg-primary/5 rounded-xl p-4 border border-primary/10">
+                    <div className="flex">
+                      <div className="flex-shrink-0">
+                        <CheckCircle className="h-5 w-5 text-primary" />
+                      </div>
+                      <div className="ml-3">
+                        <h3 className="text-sm font-medium text-primary">Supporting Craftsmanship</h3>
+                        <p className="mt-1 text-sm text-neutral-600">
+                          Your purchase directly supports traditional artisans and helps preserve valuable cultural knowledge for future generations.
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                </CardContent>
-                <CardFooter className="bg-neutral-50 text-sm text-neutral-600">
-                  <p>
-                    You're supporting traditional craftsmanship with this purchase. Thank you for helping preserve these valuable skills!
-                  </p>
-                </CardFooter>
-              </Card>
+                </div>
+              </div>
             </div>
           </div>
         </div>
