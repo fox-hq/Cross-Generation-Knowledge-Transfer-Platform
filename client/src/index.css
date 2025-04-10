@@ -9,7 +9,7 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
-    @apply bg-neutral-950;
+    @apply bg-black;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -20,26 +20,26 @@
     @apply text-neutral-300;
   }
   
-  /* Dark mode by default */
+  /* Pure black mode by default */
   :root {
-    --background: 0 0% 5%;
-    --foreground: 0 0% 95%;
-    --card: 0 0% 7%;
-    --card-foreground: 0 0% 95%;
-    --popover: 0 0% 7%;
-    --popover-foreground: 0 0% 95%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 65%;
-    --accent: 0 0% 12%;
-    --accent-foreground: 0 0% 98%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 3%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 3%;
+    --popover-foreground: 0 0% 100%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 7%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 7%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 0 0% 7%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 85% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 0 0% 70%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 10%;
+    --input: 0 0% 10%;
+    --ring: 0 0% 80%;
   }
 }
 
@@ -179,27 +179,32 @@ img {
 .card {
   @apply relative w-full max-w-md mx-auto overflow-hidden rounded-2xl;
   height: 400px;
-  transition: all 0.5s ease;
+  transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
   background: linear-gradient(170deg, rgba(58, 56, 86, 0.9) 0%, rgb(31, 31, 53) 100%);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transform-origin: center center;
 }
 
 .card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 0 25px rgba(91, 69, 196, 0.45);
+  transform: translateY(-20px) scale(1.03);
+  box-shadow: 0 0 40px rgba(91, 69, 196, 0.8);
+  z-index: 10;
 }
 
 .card .content {
   @apply p-6 absolute bottom-0 left-0 right-0 z-10;
   height: 200px;
-  transition: all 0.5s ease;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
   backdrop-filter: blur(5px);
   background: linear-gradient(to top, rgba(31, 31, 53, 1), rgba(31, 31, 53, 0.7), transparent);
+  transform: translateZ(20px);
 }
 
 .card:hover .content {
   height: 100%;
-  background: linear-gradient(to top, rgba(31, 31, 53, 1), rgba(31, 31, 53, 0.95));
+  background: linear-gradient(to top, rgba(31, 31, 53, 1), rgba(31, 31, 53, 0.98));
 }
 
 .card .content .heading {
@@ -212,18 +217,20 @@ img {
   @apply text-base text-neutral-300 font-normal leading-relaxed opacity-0 mb-5;
   font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
   max-height: 0;
-  transition: all 0.5s ease;
+  transition: all 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+  transform: translateY(20px);
 }
 
 .card:hover .content .para {
   @apply opacity-100;
   max-height: 200px;
+  transform: translateY(0);
 }
 
 .card .content .btn {
   @apply bg-primary hover:bg-primary/90 py-2 px-5 rounded-lg text-white font-medium;
-  transition: all 0.3s ease;
-  transform: translateY(40px);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s;
+  transform: translateY(60px);
   opacity: 0;
   font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
