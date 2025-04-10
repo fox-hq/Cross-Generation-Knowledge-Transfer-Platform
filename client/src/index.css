@@ -9,7 +9,7 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
-    @apply bg-black;
+    background-color: rgba(9,9,11,255);
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -20,25 +20,25 @@
     @apply text-neutral-300;
   }
   
-  /* Pure black mode by default */
+  /* Pure black mode by default - using rgba(9,9,11,255) */
   :root {
-    --background: 0 0% 0%;
+    --background: 240 15% 4%;  /* rgba(9,9,11,255) in HSL format */
     --foreground: 0 0% 100%;
-    --card: 0 0% 3%;
+    --card: 240 15% 4%;
     --card-foreground: 0 0% 100%;
-    --popover: 0 0% 3%;
+    --popover: 240 15% 4%;
     --popover-foreground: 0 0% 100%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 7%;
+    --secondary: 240 15% 8%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 7%;
+    --muted: 240 15% 8%;
     --muted-foreground: 0 0% 70%;
-    --accent: 0 0% 7%;
+    --accent: 240 15% 8%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 85% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 10%;
-    --input: 0 0% 10%;
+    --border: 240 15% 6%;
+    --input: 240 15% 6%;
     --ring: 0 0% 80%;
   }
 }
