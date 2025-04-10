@@ -6,12 +6,17 @@ import {
   Product, InsertProduct,
   Discussion, InsertDiscussion,
   Reply, InsertReply,
-  Showcase, InsertShowcase
+  Showcase, InsertShowcase,
+  users, courses, mentorships, transcriptions, products, discussions, replies, showcases
 } from "@shared/schema";
 import session from "express-session";
 import createMemoryStore from "memorystore";
+import connectPgSimple from "connect-pg-simple";
+import { db, pool } from "./db";
+import { eq } from "drizzle-orm";
 
 const MemoryStore = createMemoryStore(session);
+const PostgresSessionStore = connectPgSimple(session);
 
 export interface IStorage {
   sessionStore: session.Store;
@@ -346,7 +351,7 @@ export class MemStorage implements IStorage {
       title: "Traditional Woodworking Fundamentals",
       description: "Learn the fundamentals of traditional woodworking with hand tools and classic techniques.",
       category: "Woodworking",
-      price: 89,
+      price: "89",
       imageUrl: "https://images.unsplash.com/photo-1545062156-9e0f7c63e550",
       instructorId: 1,
       duration: "8 hours",
@@ -517,4 +522,177 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+export class DatabaseStorage implements IStorage {
+  sessionStore: session.Store;
+
+  constructor() {
+    this.sessionStore = new PostgresSessionStore({
+      pool,
+      createTableIfMissing: true, 
+    });
+  }
+
+  // User methods
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user;
+  }
+  
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.email, email));
+    return user;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db.insert(users).values(insertUser).returning();
+    return user;
+  }
+  
+  // Course methods
+  async getCourses(): Promise<Course[]> {
+    return db.select().from(courses);
+  }
+  
+  async getCourse(id: number): Promise<Course | undefined> {
+    const [course] = await db.select().from(courses).where(eq(courses.id, id));
+    return course;
+  }
+  
+  async getCoursesByInstructor(instructorId: number): Promise<Course[]> {
+    return db.select().from(courses).where(eq(courses.instructorId, instructorId));
+  }
+  
+  async createCourse(insertCourse: InsertCourse): Promise<Course> {
+    const [course] = await db.insert(courses).values(insertCourse).returning();
+    return course;
+  }
+  
+  // Mentorship methods
+  async getMentorships(): Promise<Mentorship[]> {
+    return db.select().from(mentorships);
+  }
+  
+  async getMentorship(id: number): Promise<Mentorship | undefined> {
+    const [mentorship] = await db.select().from(mentorships).where(eq(mentorships.id, id));
+    return mentorship;
+  }
+  
+  async getMentorshipsByMentor(mentorId: number): Promise<Mentorship[]> {
+    return db.select().from(mentorships).where(eq(mentorships.mentorId, mentorId));
+  }
+  
+  async createMentorship(insertMentorship: InsertMentorship): Promise<Mentorship> {
+    const [mentorship] = await db.insert(mentorships).values(insertMentorship).returning();
+    return mentorship;
+  }
+  
+  // Transcription methods
+  async getTranscriptions(userId: number): Promise<Transcription[]> {
+    return db.select().from(transcriptions).where(eq(transcriptions.userId, userId));
+  }
+  
+  async getTranscription(id: number): Promise<Transcription | undefined> {
+    const [transcription] = await db.select().from(transcriptions).where(eq(transcriptions.id, id));
+    return transcription;
+  }
+  
+  async createTranscription(insertTranscription: InsertTranscription): Promise<Transcription> {
+    const [transcription] = await db.insert(transcriptions).values(insertTranscription).returning();
+    return transcription;
+  }
+  
+  // Product methods
+  async getProducts(): Promise<Product[]> {
+    return db.select().from(products);
+  }
+  
+  async getProduct(id: number): Promise<Product | undefined> {
+    const [product] = await db.select().from(products).where(eq(products.id, id));
+    return product;
+  }
+  
+  async getProductsBySeller(sellerId: number): Promise<Product[]> {
+    return db.select().from(products).where(eq(products.sellerId, sellerId));
+  }
+  
+  async createProduct(insertProduct: InsertProduct): Promise<Product> {
+    const [product] = await db.insert(products).values(insertProduct).returning();
+    return product;
+  }
+  
+  // Discussion methods
+  async getDiscussions(): Promise<Discussion[]> {
+    return db.select().from(discussions);
+  }
+  
+  async getDiscussion(id: number): Promise<Discussion | undefined> {
+    const [discussion] = await db.select().from(discussions).where(eq(discussions.id, id));
+    return discussion;
+  }
+  
+  async getDiscussionsByCategory(category: string): Promise<Discussion[]> {
+    return db.select().from(discussions).where(eq(discussions.category, category));
+  }
+  
+  async createDiscussion(insertDiscussion: InsertDiscussion): Promise<Discussion> {
+    const [discussion] = await db.insert(discussions).values(insertDiscussion).returning();
+    return discussion;
+  }
+  
+  async incrementDiscussionViews(id: number): Promise<void> {
+    const [discussion] = await db.select().from(discussions).where(eq(discussions.id, id));
+    if (discussion) {
+      await db
+        .update(discussions)
+        .set({ views: discussion.views + 1 })
+        .where(eq(discussions.id, id));
+    }
+  }
+  
+  // Reply methods
+  async getRepliesByDiscussion(discussionId: number): Promise<Reply[]> {
+    return db.select().from(replies).where(eq(replies.discussionId, discussionId));
+  }
+  
+  async createReply(insertReply: InsertReply): Promise<Reply> {
+    const [reply] = await db.insert(replies).values(insertReply).returning();
+    return reply;
+  }
+  
+  // Showcase methods
+  async getShowcases(): Promise<Showcase[]> {
+    return db.select().from(showcases);
+  }
+  
+  async getShowcase(id: number): Promise<Showcase | undefined> {
+    const [showcase] = await db.select().from(showcases).where(eq(showcases.id, id));
+    return showcase;
+  }
+  
+  async getShowcasesByUser(userId: number): Promise<Showcase[]> {
+    return db.select().from(showcases).where(eq(showcases.userId, userId));
+  }
+  
+  async createShowcase(insertShowcase: InsertShowcase): Promise<Showcase> {
+    const [showcase] = await db.insert(showcases).values(insertShowcase).returning();
+    return showcase;
+  }
+  
+  async incrementShowcaseLikes(id: number): Promise<void> {
+    const [showcase] = await db.select().from(showcases).where(eq(showcases.id, id));
+    if (showcase) {
+      await db
+        .update(showcases)
+        .set({ likes: showcase.likes + 1 })
+        .where(eq(showcases.id, id));
+    }
+  }
+}
+
+// Use the database implementation for storage in production
+export const storage = new DatabaseStorage();
