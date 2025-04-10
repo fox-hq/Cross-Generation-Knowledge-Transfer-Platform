@@ -44,10 +44,6 @@
   }
   
   .text-gradient-primary {
-    @apply text-gradient from-primary-500 via-primary-400 to-primary-600;
-  }
-  
-  .text-gradient-purple {
     @apply text-gradient from-purple-600 via-pink-500 to-indigo-500;
   }
   

@@ -80,8 +80,8 @@ export default {
           },
         },
         "pulse-slow": {
-          '0%, 100%': { opacity: 1 },
-          '50%': { opacity: 0.8 },
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.8' },
         },
         "float": {
           '0%, 100%': { transform: 'translateY(0)' },
