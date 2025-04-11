@@ -7,13 +7,13 @@ export function HeroSection() {
     <section className="relative bg-gradient-to-br from-primary-600 via-primary-500 to-primary-700 text-white overflow-hidden">
       {/* Animated gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-purple-800/20 via-pink-600/20 to-indigo-800/20 opacity-70"></div>
-      
+
       {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
         <div className="absolute top-20 left-10 w-64 h-64 bg-purple-300/20 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 right-10 w-80 h-80 bg-indigo-400/20 rounded-full blur-3xl"></div>
       </div>
-      
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 lg:py-28 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="max-w-xl">
@@ -21,20 +21,20 @@ export function HeroSection() {
               <Sparkles className="h-4 w-4 mr-2 text-yellow-300" />
               <span>Connecting Generations Through Knowledge</span>
             </div>
-            
+
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-100 to-blue-100 tracking-tight">
-              Preserve Wisdom, Share Skills, Build Legacy
+              Preserve Wisdom, Share Skills, Build 
             </h1>
-            
+
             <p className="text-lg md:text-xl text-blue-50/90 mb-8 leading-relaxed max-w-2xl">
               Connect with masters who've perfected their craft over decades. Learn authentic skills, preserve cultural techniques, and become part of a living tradition.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <Button 
                 asChild
                 size="lg"
-                className="bg-white text-primary-700 hover:bg-primary-50 hover:scale-105 transition-all shadow-lg shadow-primary-900/20 group"
+                className="bg-purple-600 text-white hover:bg-purple-700 hover:scale-105 transition-all shadow-lg shadow-purple-900/30 group"
               >
                 <Link href="/explore">
                   Explore Courses
@@ -51,7 +51,7 @@ export function HeroSection() {
               </Button>
             </div>
           </div>
-          
+
           {/* High-quality image of a young woman learning from a mentor */}
           <div className="relative hidden lg:block">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-500 to-purple-600 rounded-2xl blur-sm opacity-70"></div>
@@ -70,7 +70,7 @@ export function HeroSection() {
           </div>
         </div>
       </div>
-      
+
       {/* Decorative wave */}
       <div className="absolute bottom-0 left-0 right-0">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full">
