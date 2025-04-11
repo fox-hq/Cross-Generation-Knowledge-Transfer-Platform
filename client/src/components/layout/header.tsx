@@ -61,7 +61,7 @@ export function Header() {
               </span>
             </Link>
           </div>
-
+          
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
@@ -79,7 +79,7 @@ export function Header() {
               </Link>
             ))}
           </nav>
-
+          
           <div className="flex items-center space-x-4">
             <Button
               variant="ghost"
@@ -89,7 +89,7 @@ export function Header() {
             >
               <Search className="h-5 w-5" />
             </Button>
-
+            
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -144,7 +144,7 @@ export function Header() {
                 <Link href="/auth">Sign In</Link>
               </Button>
             )}
-
+            
             {/* Mobile menu button */}
             <Button
               variant="ghost"
@@ -157,7 +157,7 @@ export function Header() {
             </Button>
           </div>
         </div>
-
+        
         {/* Mobile menu */}
         {mobileMenuOpen && (
           <div className="md:hidden pt-2 pb-4 space-y-1 border-t border-white/10 animate-in slide-in-from-top-5 duration-300">
