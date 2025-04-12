@@ -15,6 +15,41 @@ import {
 import { Clock, Video, Search, Filter } from "lucide-react";
 import MainLayout from "@/components/layout/main-layout";
 
+interface VideoData {
+  id: string;
+  title: string;
+}
+
+interface VideoCategories {
+  trades: string[];
+  crafts: string[];
+  culture: string[];
+}
+
+const videos: VideoCategories = {
+  trades: [
+    'tfGYR07Tgr4',
+    'BorBwJD1_xI',
+    'Hpqmcp-nKhk',
+  ],
+  crafts: [
+    'ozMXZORhBJk',
+    '23UIklqkc-Y',
+    'zHR5_jYxHNg',
+  ],
+  culture: [
+    'n2v42MAA6FY',
+    'O030fzDUAOw',
+    'EZjb5N0vkDE',
+  ],
+};
+
+const categoryTitles = {
+  trades: '🛠️ Disappearing Trades',
+  crafts: '🎨 Traditional Crafts',
+  culture: '🌍 Cultural Practices & Mentorship'
+};
+
 export default function ExplorePage() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
@@ -22,6 +57,7 @@ export default function ExplorePage() {
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
+  const [videoTitles, setVideoTitles] = useState<Record<string, string>>({});
 
   const categories = [
     "all",
@@ -68,6 +104,32 @@ export default function ExplorePage() {
 
     setFilteredCourses(filtered);
   }, [searchQuery, categoryFilter, courses]);
+
+  useEffect(() => {
+    const fetchVideoTitles = async () => {
+      const allVideoIds = Object.values(videos).flat();
+      const idsString = allVideoIds.join(',');
+      const apiKey = process.env.YOUTUBE_API_KEY || 'AIzaSyBhVNCopqLEDj4NrOY06qzEWhHSKsBzWsA';
+
+      try {
+        const response = await fetch(
+          `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${idsString}&key=${apiKey}`
+        );
+        const data = await response.json();
+
+        const titles: Record<string, string> = {};
+        data.items?.forEach((item: any) => {
+          titles[item.id] = item.snippet.title;
+        });
+
+        setVideoTitles(titles);
+      } catch (error) {
+        console.error('Error fetching video titles:', error);
+      }
+    };
+
+    fetchVideoTitles();
+  }, []);
 
   return (
     <MainLayout>
@@ -117,78 +179,43 @@ export default function ExplorePage() {
           {loading && <LoadingPage />}
           {error && <div className="text-center text-red-500 py-10">{error}</div>}
 
-          {/* Courses Grid */}
-          {filteredCourses.length === 0 ? (
-            <div className="text-center py-12">
-              <h3 className="text-lg font-medium text-neutral-900 mb-2">
-                No courses found
-              </h3>
-              <p className="text-neutral-600">
-                Try adjusting your search or filters.
-              </p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredCourses.map((course) => (
-                <div
-                  key={course.id}
-                  className="bg-white rounded-xl shadow-md hover:shadow-lg overflow-hidden transition"
-                >
-                  <div className="relative pb-[56.25%]">
-                    <img
-                      src={course.imageUrl}
-                      alt={course.title}
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <span className="bg-amber-500 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
-                        {course.category}
-                      </span>
-                      <h3 className="text-white text-lg font-semibold mt-2">
-                        {course.title}
-                      </h3>
-                    </div>
-                  </div>
+          <div className="bg-neutral-50 min-h-screen py-8">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+              <header className="text-center mb-24 py-12">
+                <h1 className="text-4xl md:text-6xl font-black mb-8 leading-tight tracking-tight bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text relative inline-block">
+                  Preserving Knowledge Across Generations
+                </h1>
+              </header>
 
-                  <div className="p-5">
-                    <p className="text-neutral-600 text-sm mb-4 line-clamp-2">
-                      {course.description}
-                    </p>
-                    <div className="flex items-center mb-4">
-                      <div className="w-10 h-10 bg-purple-100 text-purple-600 font-bold rounded-full flex items-center justify-center mr-3">
-                        {course.instructorId}
+              {Object.entries(videos).map(([category, videoIds]) => (
+                <section key={category} className="mb-24">
+                  <h2 className="text-2xl font-serif mb-12 pb-4 border-b-2 border-purple-500/20 text-neutral-900">
+                    {categoryTitles[category as keyof typeof categoryTitles]}
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {videoIds.map((videoId) => (
+                      <div key={videoId} className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] border border-white/70 relative">
+                        <div className="relative pb-[56.25%] bg-black">
+                          <iframe
+                            src={`https://www.youtube.com/embed/${videoId}`}
+                            title={videoTitles[videoId] || 'YouTube Video'}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            className="absolute inset-0 w-full h-full"
+                          />
+                        </div>
+                        <div className="p-8 bg-gradient-to-b from-white/90 to-white backdrop-blur-sm">
+                          <h3 className="text-lg font-medium text-neutral-900 leading-relaxed">
+                            {videoTitles[videoId] || 'Loading...'}
+                          </h3>
+                        </div>
                       </div>
-                      <div>
-                        <p className="text-sm font-medium text-neutral-900">
-                          Instructor #{course.instructorId}
-                        </p>
-                        <p className="text-xs text-neutral-500">
-                          Master Craftsman
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-between items-center text-sm text-neutral-500 mb-2">
-                      <span className="flex items-center gap-1">
-                        <Video className="h-4 w-4" /> {course.lessonCount} lessons
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="h-4 w-4" /> {course.duration}
-                      </span>
-                    </div>
-
-                    <div className="flex justify-between items-center mt-2">
-                      <p className="text-primary font-semibold">${Number(course.price)}</p>
-                      <Button asChild className="text-sm font-medium">
-                        <Link href={`/course/${course.id}`}>View Course</Link>
-                      </Button>
-                    </div>
+                    ))}
                   </div>
-                </div>
+                </section>
               ))}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </MainLayout>
