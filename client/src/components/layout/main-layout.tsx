@@ -1,17 +1,14 @@
-import { ReactNode } from "react";
-import { Header } from "./header";
-import { Footer } from "./footer";
+import { useLocation } from 'wouter';
+import { Header } from '@/components/layout/header';
 
-interface MainLayoutProps {
-  children: ReactNode;
-}
+export default function MainLayout({ children }: { children: React.ReactNode }) {
+  const [location] = useLocation();
+  const isHome = location === '/';
 
-export default function MainLayout({ children }: MainLayoutProps) {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
-      <main className="flex-grow">{children}</main>
-      <Footer />
-    </div>
+    <>
+      {!isHome && <Header />} {/* 👈 Hide the default header on home */}
+      <main>{children}</main>
+    </>
   );
 }
