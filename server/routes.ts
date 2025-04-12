@@ -263,5 +263,66 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   const httpServer = createServer(app);
 
+  // Add AI chat endpoint
+  router.post('/api/ai/chat', async (req, res) => {
+    try {
+      const { prompt } = req.body;
+      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          'HTTP-Referer': 'https://your-replit-app.repl.co',
+          'X-Title': 'Knowledge AI'
+        },
+        body: JSON.stringify({
+          model: 'mistralai/mistral-7b-instruct',
+          messages: [{ role: 'user', content: prompt }],
+          max_tokens: 300
+        })
+      });
+
+      const data = await response.json();
+      const aiResponse = data.choices[0].message.content;
+
+      // Get video suggestions
+      const videoQuery = `Give me 3 short but specific keyword phrases (comma separated) I can use to search for YouTube videos related to this content: ${aiResponse}`;
+      const keywordsResponse = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          'HTTP-Referer': 'https://your-replit-app.repl.co',
+          'X-Title': 'Knowledge AI'
+        },
+        body: JSON.stringify({
+          model: 'mistralai/mistral-7b-instruct',
+          messages: [{ role: 'user', content: videoQuery }],
+          max_tokens: 20
+        })
+      });
+
+      const keywordsData = await keywordsResponse.json();
+      const keywords = keywordsData.choices[0].message.content.split(',').map((kw: string) => kw.trim());
+
+      // Get YouTube videos
+      const videos = [];
+      for (const keyword of keywords) {
+        const ytResponse = await fetch(
+          `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=1&q=${encodeURIComponent(keyword)}&key=${process.env.YOUTUBE_API_KEY}`
+        );
+        const ytData = await ytResponse.json();
+        if (ytData.items?.[0]?.id?.videoId) {
+          videos.push(ytData.items[0].id.videoId);
+        }
+      }
+
+      res.json({ response: aiResponse, videos: videos.slice(0, 3) });
+    } catch (error) {
+      console.error('Error:', error);
+      res.status(500).json({ error: 'Failed to process request' });
+    }
+  });
+
   return httpServer;
 }
