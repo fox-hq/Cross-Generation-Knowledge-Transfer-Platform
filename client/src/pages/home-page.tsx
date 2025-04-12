@@ -33,6 +33,11 @@ export default function Home() {
                 Retired Professional Docs
               </DropdownMenuItem>
             </Link>
+            <Link to="/3d-learning" className="block">
+              <DropdownMenuItem className="cursor-pointer text-white hover:text-gray-300 transition">
+                3D Learning
+              </DropdownMenuItem>
+            </Link>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
