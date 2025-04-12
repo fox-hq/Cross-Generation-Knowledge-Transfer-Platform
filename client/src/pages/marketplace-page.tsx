@@ -30,6 +30,7 @@ export default function MarketplacePage() {
   const { user } = useAuth();
   const { toast } = useToast();
   const [products, setProducts] = useState<Product[]>([]);
+  const [courses, setCourses] = useState<Course[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -42,7 +43,28 @@ export default function MarketplacePage() {
   const categories = ["all", "Woodworking", "Leatherwork", "Blacksmithing", "Culinary", "Textile Arts", "Ceramics", "Basketry"];
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchData = async () => {
+      try {
+        const [productsRes, coursesRes] = await Promise.all([
+          apiRequest("GET", "/api/products"),
+          apiRequest("GET", "/api/courses")
+        ]);
+        const productsData = await productsRes.json();
+        const coursesData = await coursesRes.json();
+        setProducts(productsData);
+        setCourses(coursesData);
+      } catch (error) {
+        setError("Failed to load marketplace items");
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const fetchProducts = async () => {
       try {
         const res = await apiRequest("GET", "/api/products");
         const data = await res.json();
@@ -243,6 +265,37 @@ export default function MarketplacePage() {
                 ))}
               </div>
             )}
+
+            <div className="mt-12">
+              <h2 className="text-2xl font-bold text-neutral-900 mb-6">Available Courses</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {courses.map((course) => (
+                  <div key={course.id} className="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div className="relative h-56">
+                      <img 
+                        src={course.imageUrl}
+                        alt={course.title} 
+                        className="w-full h-full object-cover" 
+                      />
+                      <span className="absolute top-2 right-2 bg-purple-500 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
+                        {course.category}
+                      </span>
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-medium text-neutral-900 text-lg mb-1">{course.title}</h3>
+                      <p className="text-neutral-600 text-sm mb-3">{course.description}</p>
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium text-primary">${Number(course.price)}</span>
+                        <span className="text-sm text-neutral-500">{course.duration}</span>
+                      </div>
+                      <Button className="w-full mt-4" size="sm" asChild>
+                        <Link href={`/course/${course.id}`}>View Course</Link>
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
           
           <div className="lg:w-1/4">

@@ -1,4 +1,3 @@
-
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Route, Switch } from "wouter";
 import { queryClient } from "./lib/queryClient";
@@ -14,6 +13,7 @@ const VideosPage = lazy(() => import("./pages/videos-page"));
 const ValidateWorkPage = lazy(() => import("./pages/validate-work-page"));
 const KnowledgeAIPage = lazy(() => import("./pages/knowledge-ai-page"));
 const RetiredProfessionalsPage = lazy(() => import("./pages/retired-professionals-page"));
+const ThreeDLearningPage = lazy(() => import("./pages/3d-learning-page"));
 const AuthPage = lazy(() => import("./pages/auth-page"));
 const MarketplacePage = lazy(() => import("./pages/marketplace-page"));
 const MentorshipPage = lazy(() => import("./pages/mentorship-page"));
@@ -22,6 +22,8 @@ const CourseDetail = lazy(() => import("./pages/course-detail"));
 const TranscriptionPage = lazy(() => import("./pages/transcription-page"));
 const Checkout = lazy(() => import("./pages/checkout"));
 const NotFound = lazy(() => import("./pages/not-found"));
+const CreateCoursePage = lazy(() => import("./pages/create-course-page")); // Added import
+
 
 export default function App() {
   return (
@@ -34,6 +36,7 @@ export default function App() {
             <Route path="/videos" component={VideosPage} />
         <Route path="/knowledge-ai" component={KnowledgeAIPage} />
         <Route path="/retired-professionals" component={RetiredProfessionalsPage} />
+            <Route path="/3d-learning" component={ThreeDLearningPage} />
             <Route path="/auth" component={AuthPage} />
             <ProtectedRoute path="/marketplace" component={MarketplacePage} />
             <ProtectedRoute path="/mentorship" component={MentorshipPage} />
@@ -42,6 +45,7 @@ export default function App() {
             <Route path="/course/:id" component={CourseDetail} />
             <Route path="/transcribe" component={TranscriptionPage} />
             <Route path="/checkout" component={Checkout} />
+            <Route path="/create-course" component={CreateCoursePage} /> {/* Added route */}
             <Route component={NotFound} />
           </Switch>
           </Suspense>

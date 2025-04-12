@@ -50,6 +50,11 @@ export function HomeHeader() {
                       Retired Professional Docs
                     </DropdownMenuItem>
                   </Link>
+                  <Link href="/3d-learning" className="block">
+                    <DropdownMenuItem className="cursor-pointer">
+                      3D Learning
+                    </DropdownMenuItem>
+                  </Link>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
@@ -125,6 +130,11 @@ export function HomeHeader() {
                   <Link href="/retired-professionals" className="block">
                     <DropdownMenuItem className="cursor-pointer">
                       Retired Professional Docs
+                    </DropdownMenuItem>
+                  </Link>
+                  <Link href="/3d-learning" className="block">
+                    <DropdownMenuItem className="cursor-pointer">
+                      3D Learning
                     </DropdownMenuItem>
                   </Link>
                 </DropdownMenuContent>
