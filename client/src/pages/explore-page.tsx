@@ -109,7 +109,7 @@ export default function ExplorePage() {
     const fetchVideoTitles = async () => {
       const allVideoIds = Object.values(videos).flat();
       const idsString = allVideoIds.join(',');
-      const apiKey = process.env.YOUTUBE_API_KEY || 'AIzaSyBhVNCopqLEDj4NrOY06qzEWhHSKsBzWsA';
+      const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY || 'AIzaSyBhVNCopqLEDj4NrOY06qzEWhHSKsBzWsA';
 
       try {
         const response = await fetch(
