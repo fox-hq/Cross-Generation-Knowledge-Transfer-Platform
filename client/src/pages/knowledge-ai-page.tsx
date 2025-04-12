@@ -1,4 +1,3 @@
-
 import { useState, FormEvent, useEffect } from 'react';
 import MainLayout from "@/components/layout/main-layout";
 
@@ -36,18 +35,18 @@ export default function KnowledgeAIPage() {
         },
         body: JSON.stringify({ prompt })
       });
-      
+
       const contentType = response.headers.get('content-type');
       if (!contentType || !contentType.includes('application/json')) {
         throw new Error('Server returned non-JSON response');
       }
 
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data.message || `HTTP error! status: ${response.status}`);
       }
-      
+
       setGptResponse(data.response || '');
       setVideoIds(data.videoIds || []);
       setStatus('');
@@ -72,7 +71,7 @@ export default function KnowledgeAIPage() {
 
     recognition.start();
     setStatus("🎤 Listening...");
-    
+
     recognition.onresult = (event: any) => {
       const transcript = event.results[0][0].transcript;
       setPrompt(transcript);
@@ -108,20 +107,20 @@ export default function KnowledgeAIPage() {
             <p className="text-neutral-600">Ask anything using voice or text</p>
           </header>
 
-          <div className="bg-white rounded-2xl p-8 shadow-lg border border-neutral-200 mb-8">
+          <div className="bg-gray-50 rounded-2xl p-8 shadow-xl border border-gray-200 mb-8 hover:shadow-2xl transition-shadow">
             <form onSubmit={handleSubmit}>
               <textarea
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder="Type your question or click 'Speak' to use voice..."
-                className="w-full p-4 min-h-[120px] mb-4 border-2 border-neutral-200 rounded-lg"
+                className="w-full p-4 min-h-[120px] mb-4 border-2 border-gray-200 rounded-lg"
               />
-              
+
               <div className="flex flex-wrap gap-4">
                 <button
                   type="button"
                   onClick={startListening}
-                  className="px-6 py-3 bg-white border border-neutral-200 rounded-xl text-neutral-800 font-semibold hover:bg-neutral-50"
+                  className="px-6 py-3 bg-white border border-gray-200 rounded-xl text-gray-800 font-semibold hover:bg-gray-50"
                 >
                   🎤 Speak
                 </button>
@@ -132,7 +131,7 @@ export default function KnowledgeAIPage() {
                   ✨ Ask AI
                 </button>
                 <select
-                  className="px-3 py-2 border border-neutral-200 rounded-lg"
+                  className="px-3 py-2 border border-gray-200 rounded-lg"
                   onChange={(e) => setSelectedVoice(voices[parseInt(e.target.value)])}
                 >
                   {voices.map((voice, index) => (
@@ -142,7 +141,7 @@ export default function KnowledgeAIPage() {
                   ))}
                 </select>
                 <select
-                  className="px-3 py-2 border border-neutral-200 rounded-lg"
+                  className="px-3 py-2 border border-gray-200 rounded-lg"
                   value={selectedLanguage}
                   onChange={(e) => setSelectedLanguage(e.target.value)}
                 >
@@ -153,7 +152,7 @@ export default function KnowledgeAIPage() {
                 </select>
               </div>
               {status && (
-                <div className="mt-4 p-2 bg-neutral-100 text-neutral-700 rounded-lg text-center">
+                <div className="mt-4 p-2 bg-gray-100 text-gray-700 rounded-lg text-center">
                   {status}
                 </div>
               )}
@@ -161,21 +160,21 @@ export default function KnowledgeAIPage() {
           </div>
 
           {gptResponse && (
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-neutral-200 mb-8">
+            <div className="bg-gray-50 rounded-2xl p-8 shadow-xl border border-gray-200 mb-8 hover:shadow-2xl transition-shadow">
               <h2 className="text-2xl font-bold text-indigo-600 mb-6">AI Response</h2>
-              <div className="bg-neutral-50 p-6 rounded-xl border border-neutral-200 mb-6 whitespace-pre-wrap">
+              <div className="bg-gray-100 p-6 rounded-xl border border-gray-200 mb-6 whitespace-pre-wrap">
                 {gptResponse}
               </div>
               <div className="flex gap-4">
                 <button
                   onClick={speakText}
-                  className="px-6 py-3 bg-white border border-neutral-200 rounded-xl text-neutral-800 font-semibold hover:bg-neutral-50"
+                  className="px-6 py-3 bg-white border border-gray-200 rounded-xl text-gray-800 font-semibold hover:bg-gray-50"
                 >
                   🔊 Listen
                 </button>
                 <button
                   onClick={stopSpeaking}
-                  className="px-6 py-3 bg-white border border-neutral-200 rounded-xl text-neutral-800 font-semibold hover:bg-neutral-50"
+                  className="px-6 py-3 bg-white border border-gray-200 rounded-xl text-gray-800 font-semibold hover:bg-gray-50"
                 >
                   ⏹️ Stop
                 </button>
@@ -184,7 +183,7 @@ export default function KnowledgeAIPage() {
           )}
 
           {videoIds.length > 0 && (
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-neutral-200">
+            <div className="bg-gray-50 rounded-2xl p-8 shadow-xl border border-gray-200 hover:shadow-2xl transition-shadow">
               <h2 className="text-2xl font-bold text-indigo-600 mb-6">Related Videos</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {videoIds.map((videoId, index) => (
