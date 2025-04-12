@@ -26,6 +26,7 @@ export default function KnowledgeAIPage() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setStatus('Processing...');
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -33,12 +34,21 @@ export default function KnowledgeAIPage() {
         body: JSON.stringify({ prompt })
       });
       
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
+      if (!data || !data.response) {
+        throw new Error('Invalid response format');
+      }
+      
       setGptResponse(data.response);
       setVideoIds(data.videoIds || []);
+      setStatus('');
     } catch (error) {
       console.error('Error:', error);
-      setStatus('Failed to get response');
+      setStatus('Failed to get response. Please try again.');
     }
   };
 
