@@ -29,7 +29,9 @@ export default function KnowledgeAIPage() {
       setStatus('');
     } catch (error) {
       console.error('Error:', error);
-      setStatus('Failed to get response. Please check server connection.');
+      setStatus('Failed to get response. Please try again or check if API key is set correctly.');
+      setGptResponse('');
+      setVideoIds([]);
     }
   };
 

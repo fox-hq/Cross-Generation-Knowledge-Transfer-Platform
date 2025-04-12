@@ -288,10 +288,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })
       });
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('OpenRouter API Error:', errorData);
+        return res.status(response.status).json({ 
+          error: errorData.error?.message || 'Failed to get response from AI service'
+        });
+      }
+
       const data = await response.json();
+      if (!data.choices?.[0]?.message?.content) {
+        console.error('Invalid response format:', data);
+        return res.status(500).json({ error: 'Invalid response format from AI service' });
+      }
+
       res.json({ 
         response: data.choices[0].message.content,
-        videoIds: [] // You can implement YouTube search here if needed
+        videoIds: []
       });
     } catch (error) {
       console.error('Chat API Error:', error);
