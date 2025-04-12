@@ -5,6 +5,12 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"; // Added import for DropdownMenu components
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,13 +35,32 @@ export function Header() {
         {/* Desktop Nav */}
         <nav className="hidden md:flex gap-6">
           {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-sm hover:text-gray-600 transition"
-            >
-              {item.label}
-            </Link>
+            item.label === "Explore" ? (
+              <DropdownMenu key={item.href}>
+                <DropdownMenuTrigger className="text-sm hover:text-gray-600 transition">
+                  {item.label}
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem asChild>
+                    <Link href="/explore?type=videos">Videos</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/explore?type=ai">Knowledge AI</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/explore?type=docs">Retired Professional Docs</Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-sm hover:text-gray-600 transition"
+              >
+                {item.label}
+              </Link>
+            )
           ))}
         </nav>
 
@@ -48,8 +73,8 @@ export function Header() {
                   {user.username[0].toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              <Button 
-                variant="ghost" 
+              <Button
+                variant="ghost"
                 onClick={() => {
                   logoutMutation.mutate();
                 }}
@@ -77,18 +102,37 @@ export function Header() {
       {isOpen && (
         <div className="md:hidden px-4 pb-4 flex flex-col gap-3 bg-white shadow">
           {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-sm text-black hover:text-gray-700"
-              onClick={() => setIsOpen(false)}
-            >
-              {item.label}
-            </Link>
+            item.label === "Explore" ? (
+              <DropdownMenu key={item.href}>
+                <DropdownMenuTrigger className="text-sm hover:text-gray-600 transition">
+                  {item.label}
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem asChild>
+                    <Link href="/explore?type=videos">Videos</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/explore?type=ai">Knowledge AI</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/explore?type=docs">Retired Professional Docs</Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-sm text-black hover:text-gray-700"
+                onClick={() => setIsOpen(false)}
+              >
+                {item.label}
+              </Link>
+            )
           ))}
           {user ? (
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               onClick={() => {
                 logoutMutation.mutate();
                 setIsOpen(false);
