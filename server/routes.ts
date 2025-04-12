@@ -264,15 +264,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Chat API (Added)
+  // Chat API
   const chatRouter = Router();
   chatRouter.post("/", async (req, res) => {
     try {
-      const message = req.body.message;
-      //  In a real application, this would interact with a messaging service or database.
-      const response = `You said: ${message}`; 
-      res.json({ response });
+      const { prompt } = req.body;
+      if (!prompt) {
+        return res.status(400).json({ error: "Prompt is required" });
+      }
+
+      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          'HTTP-Referer': 'https://replit.com',
+          'X-Title': 'KnowledgeAI'
+        },
+        body: JSON.stringify({
+          model: "mistralai/mistral-7b-instruct",
+          messages: [{ role: "user", content: prompt }],
+          max_tokens: 300
+        })
+      });
+
+      const data = await response.json();
+      res.json({ 
+        response: data.choices[0].message.content,
+        videoIds: [] // You can implement YouTube search here if needed
+      });
     } catch (error) {
+      console.error('Chat API Error:', error);
       res.status(500).json({ error: "Failed to process message" });
     }
   });
