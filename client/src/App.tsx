@@ -1,4 +1,3 @@
-
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Route, Switch } from "wouter";
 import { queryClient } from "./lib/queryClient";
@@ -23,6 +22,8 @@ const CourseDetail = lazy(() => import("./pages/course-detail"));
 const TranscriptionPage = lazy(() => import("./pages/transcription-page"));
 const Checkout = lazy(() => import("./pages/checkout"));
 const NotFound = lazy(() => import("./pages/not-found"));
+const CreateCoursePage = lazy(() => import("./pages/create-course-page")); // Added import
+
 
 export default function App() {
   return (
@@ -44,6 +45,7 @@ export default function App() {
             <Route path="/course/:id" component={CourseDetail} />
             <Route path="/transcribe" component={TranscriptionPage} />
             <Route path="/checkout" component={Checkout} />
+            <Route path="/create-course" component={CreateCoursePage} /> {/* Added route */}
             <Route component={NotFound} />
           </Switch>
           </Suspense>

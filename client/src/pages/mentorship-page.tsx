@@ -280,12 +280,19 @@ export default function MentorshipPage() {
         )}
         
         <div className="mt-16 max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-sm">
-          <h2 className="text-2xl font-bold text-neutral-900 mb-4">Want to become a mentor?</h2>
+          <h2 className="text-2xl font-bold text-neutral-900 mb-4">Share Your Knowledge</h2>
           <p className="text-neutral-600 mb-6">
-            If you have valuable traditional skills and knowledge that you'd like to share with the next generation, consider becoming a mentor on our platform.
+            If you have valuable traditional skills and knowledge that you'd like to share with the next generation, you can either become a mentor or create your own course.
           </p>
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
             <Button className="sm:flex-1">Apply to Become a Mentor</Button>
+            <Button 
+              variant="default" 
+              className="sm:flex-1 bg-purple-600 hover:bg-purple-700"
+              onClick={() => window.location.href = '/create-course'}
+            >
+              Create Your Course
+            </Button>
             <Button variant="outline" className="sm:flex-1">Learn More</Button>
           </div>
         </div>
