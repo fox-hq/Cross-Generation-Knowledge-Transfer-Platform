@@ -265,3 +265,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   return httpServer;
 }
+import { Router } from 'express';
+import { getYoutubeVideos, generateAIResponse } from './openai';
+
+// Add this to your existing routes
+router.post('/api/ai/chat', async (req, res) => {
+  try {
+    const { prompt } = req.body;
+    const response = await generateAIResponse(prompt);
+    const videos = await getYoutubeVideos(response);
+    res.json({ response, videos });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to process request' });
+  }
+});
