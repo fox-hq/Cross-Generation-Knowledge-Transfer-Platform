@@ -18,18 +18,18 @@ export default function Home() {
             Start Now
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-48 bg-neutral-900/95 backdrop-blur-sm border border-neutral-800 shadow-lg rounded-lg p-1">
-            <DropdownMenuItem asChild>
-              <Link href="/videos" className="cursor-pointer text-white hover:text-gray-300 transition">
+            <DropdownMenuItem>
+              <Link to="/videos" className="w-full cursor-pointer text-white hover:text-gray-300 transition">
                 Videos
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/knowledge-ai" className="cursor-pointer text-white hover:text-gray-300 transition">
+            <DropdownMenuItem>
+              <Link to="/knowledge-ai" className="w-full cursor-pointer text-white hover:text-gray-300 transition">
                 Knowledge AI
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/retired-professionals" className="cursor-pointer text-white hover:text-gray-300 transition">
+            <DropdownMenuItem>
+              <Link to="/retired-professionals" className="w-full cursor-pointer text-white hover:text-gray-300 transition">
                 Retired Professional Docs
               </Link>
             </DropdownMenuItem>
