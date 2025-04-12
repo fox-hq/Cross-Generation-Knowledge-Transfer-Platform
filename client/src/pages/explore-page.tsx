@@ -143,7 +143,7 @@ export default function ExplorePage() {
           <div className="bg-neutral-50 min-h-screen py-8">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <header className="text-center mb-24 py-12">
-                <h1 className="text-4xl md:text-6xl font-black mb-8 leading-tight tracking-tight bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text relative inline-block">
+                <h1 className="text-4xl md:text-6xl font-black mb-8 py-2 leading-tight tracking-tight bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text relative inline-block max-w-[90%] break-words">
                   Preserving Knowledge Across Generations
                 </h1>
               </header>
