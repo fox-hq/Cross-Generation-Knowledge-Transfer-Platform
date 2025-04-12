@@ -4,7 +4,7 @@ import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"; // Added import
 
 
 export function HomeHeader() {
@@ -150,33 +150,6 @@ export function HomeHeader() {
           )}
         </div>
       )}
-      {/* Perfectly positioned Start Now button with dropdown */}
-      <div className="absolute z-50 left-[70%] bottom-[25%] transform -translate-x-1/2">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className="inline-block bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 text-white font-semibold text-sm px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300">
-              Start Now
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-48 bg-white/95 backdrop-blur-sm border border-neutral-200 shadow-lg rounded-lg p-1">
-            <DropdownMenuItem asChild>
-              <Link href="/explore/videos" className="cursor-pointer">
-                Videos
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/explore/knowledge-ai" className="cursor-pointer">
-                Knowledge AI
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/explore/docs" className="cursor-pointer">
-                Retired Professional Docs
-              </Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
     </header>
   );
 }
