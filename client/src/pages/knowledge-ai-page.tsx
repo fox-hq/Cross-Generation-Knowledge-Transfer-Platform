@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import MainLayout from "@/components/layout/main-layout";
 
@@ -13,17 +12,21 @@ export default function KnowledgeAIPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      setStatus('Processing...');
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt })
-      });
-      
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to get response');
-      }
+        setStatus('Loading...');
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ prompt })
+        });
+
+        const data = await response.json();
+        console.log('API Response:', data);
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to get response');
+        }
       setGptResponse(data.response);
       setVideoIds(data.videoIds || []);
       setStatus('');
@@ -49,7 +52,7 @@ export default function KnowledgeAIPage() {
     recognition.start();
     setIsListening(true);
     setStatus("🎤 Listening...");
-    
+
     recognition.onresult = (event: any) => {
       const transcript = event.results[0][0].transcript;
       setPrompt(transcript);
@@ -93,7 +96,7 @@ export default function KnowledgeAIPage() {
                 placeholder="Type your question or click 'Speak' to use voice..."
                 className="w-full p-4 border-2 border-neutral-200 rounded-lg mb-4 min-h-[120px] resize-y"
               />
-              
+
               <div className="flex flex-wrap gap-4">
                 <button
                   type="button"
@@ -119,7 +122,7 @@ export default function KnowledgeAIPage() {
                   <option value="fr-FR">French</option>
                 </select>
               </div>
-              
+
               {status && (
                 <div className="mt-4 p-2 bg-neutral-100 text-center rounded-lg">
                   {status}

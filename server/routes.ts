@@ -279,7 +279,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(500).json({ error: "API key not configured. Please check Secrets tool." });
       }
 
-      console.log('Making request to OpenRouter API...');
+      console.log('Making request to OpenRouter API with key:', apiKey.substring(0, 10) + '...');
       const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
         headers: {
