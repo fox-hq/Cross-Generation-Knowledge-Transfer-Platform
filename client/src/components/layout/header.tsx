@@ -42,13 +42,13 @@ export function Header() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuItem asChild>
-                    <Link href="/explore?type=videos">Videos</Link>
+                    <Link href="/videos">Videos</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link href="/explore?type=ai">Knowledge AI</Link>
+                    <Link href="/knowledge-ai">Knowledge AI</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link href="/explore?type=docs">Retired Professional Docs</Link>
+                    <Link href="/retired-professionals">Retired Professional Docs</Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -109,13 +109,13 @@ export function Header() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuItem asChild>
-                    <Link href="/explore?type=videos">Videos</Link>
+                    <Link href="/videos">Videos</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link href="/explore?type=ai">Knowledge AI</Link>
+                    <Link href="/knowledge-ai">Knowledge AI</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link href="/explore?type=docs">Retired Professional Docs</Link>
+                    <Link href="/retired-professionals">Retired Professional Docs</Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
