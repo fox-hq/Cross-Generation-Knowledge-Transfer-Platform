@@ -41,15 +41,15 @@ export function Header() {
                   {item.label}
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem asChild>
-                    <Link href="/videos">Videos</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/knowledge-ai">Knowledge AI</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/retired-professionals">Retired Professional Docs</Link>
-                  </DropdownMenuItem>
+                  <Link href="/videos" className="block">
+                    <DropdownMenuItem>Videos</DropdownMenuItem>
+                  </Link>
+                  <Link href="/knowledge-ai" className="block">
+                    <DropdownMenuItem>Knowledge AI</DropdownMenuItem>
+                  </Link>
+                  <Link href="/retired-professionals" className="block">
+                    <DropdownMenuItem>Retired Professional Docs</DropdownMenuItem>
+                  </Link>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
@@ -108,15 +108,15 @@ export function Header() {
                   {item.label}
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem asChild>
-                    <Link href="/videos">Videos</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/knowledge-ai">Knowledge AI</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/retired-professionals">Retired Professional Docs</Link>
-                  </DropdownMenuItem>
+                  <Link href="/videos" className="block">
+                    <DropdownMenuItem>Videos</DropdownMenuItem>
+                  </Link>
+                  <Link href="/knowledge-ai" className="block">
+                    <DropdownMenuItem>Knowledge AI</DropdownMenuItem>
+                  </Link>
+                  <Link href="/retired-professionals" className="block">
+                    <DropdownMenuItem>Retired Professional Docs</DropdownMenuItem>
+                  </Link>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
