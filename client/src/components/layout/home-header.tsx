@@ -35,15 +35,21 @@ export function HomeHeader() {
                   {item.label}
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem asChild>
-                    <Link href="/explore?type=videos">Videos</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/explore?type=ai">Knowledge AI</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/explore?type=docs">Retired Professional Docs</Link>
-                  </DropdownMenuItem>
+                  <Link href="/videos" className="block">
+                    <DropdownMenuItem className="cursor-pointer">
+                      Videos
+                    </DropdownMenuItem>
+                  </Link>
+                  <Link href="/knowledge-ai" className="block">
+                    <DropdownMenuItem className="cursor-pointer">
+                      Knowledge AI
+                    </DropdownMenuItem>
+                  </Link>
+                  <Link href="/retired-professionals" className="block">
+                    <DropdownMenuItem className="cursor-pointer">
+                      Retired Professional Docs
+                    </DropdownMenuItem>
+                  </Link>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
@@ -106,15 +112,21 @@ export function HomeHeader() {
                   {item.label}
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem asChild>
-                    <Link href="/explore?type=videos">Videos</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/explore?type=ai">Knowledge AI</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/explore?type=docs">Retired Professional Docs</Link>
-                  </DropdownMenuItem>
+                  <Link href="/videos" className="block">
+                    <DropdownMenuItem className="cursor-pointer">
+                      Videos
+                    </DropdownMenuItem>
+                  </Link>
+                  <Link href="/knowledge-ai" className="block">
+                    <DropdownMenuItem className="cursor-pointer">
+                      Knowledge AI
+                    </DropdownMenuItem>
+                  </Link>
+                  <Link href="/retired-professionals" className="block">
+                    <DropdownMenuItem className="cursor-pointer">
+                      Retired Professional Docs
+                    </DropdownMenuItem>
+                  </Link>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
