@@ -273,10 +273,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Prompt is required" });
       }
 
-      if (!process.env.OPENROUTER_API_KEY) {
-        return res.status(500).json({ error: "OpenRouter API key not configured" });
+      const apiKey = process.env.OPENROUTER_API_KEY;
+      if (!apiKey) {
+        console.error('OpenRouter API key missing');
+        return res.status(500).json({ error: "API key not configured. Please check Secrets tool." });
       }
 
+      console.log('Making request to OpenRouter API...');
       const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
         headers: {
