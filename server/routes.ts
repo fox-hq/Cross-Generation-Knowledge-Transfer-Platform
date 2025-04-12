@@ -1,4 +1,4 @@
-import express, { type Express } from "express";
+import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth } from "./auth";
@@ -263,9 +263,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   const httpServer = createServer(app);
 
-  // Initialize router
-  const router = express.Router();
-
   // Add AI chat endpoint
   router.post('/api/ai/chat', async (req, res) => {
     try {
@@ -326,9 +323,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: 'Failed to process request' });
     }
   });
-
-  // Use the router
-  app.use(router);
 
   return httpServer;
 }
