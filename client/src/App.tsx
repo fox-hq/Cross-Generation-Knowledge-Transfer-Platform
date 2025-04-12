@@ -14,6 +14,7 @@ const VideosPage = lazy(() => import("./pages/videos-page"));
 const ValidateWorkPage = lazy(() => import("./pages/validate-work-page"));
 const KnowledgeAIPage = lazy(() => import("./pages/knowledge-ai-page"));
 const RetiredProfessionalsPage = lazy(() => import("./pages/retired-professionals-page"));
+const ThreeDLearningPage = lazy(() => import("./pages/3d-learning-page"));
 const AuthPage = lazy(() => import("./pages/auth-page"));
 const MarketplacePage = lazy(() => import("./pages/marketplace-page"));
 const MentorshipPage = lazy(() => import("./pages/mentorship-page"));
@@ -34,6 +35,7 @@ export default function App() {
             <Route path="/videos" component={VideosPage} />
         <Route path="/knowledge-ai" component={KnowledgeAIPage} />
         <Route path="/retired-professionals" component={RetiredProfessionalsPage} />
+            <Route path="/3d-learning" component={ThreeDLearningPage} />
             <Route path="/auth" component={AuthPage} />
             <ProtectedRoute path="/marketplace" component={MarketplacePage} />
             <ProtectedRoute path="/mentorship" component={MentorshipPage} />
