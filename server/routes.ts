@@ -7,9 +7,6 @@ import Stripe from "stripe";
 import multer from "multer";
 import { z } from "zod";
 import { insertDiscussionSchema, insertReplySchema, insertTranscriptionSchema } from "@shared/schema";
-import { Router } from "express";
-import fetch from "node-fetch";
-
 
 // Configure Stripe
 if (!process.env.STRIPE_SECRET_KEY) {
@@ -131,7 +128,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ...req.body,
         userId: req.user.id
       });
-
+      
       const discussion = await storage.createDiscussion(validatedData);
       res.status(201).json(discussion);
     } catch (error: any) {
@@ -163,7 +160,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         discussionId: Number(req.params.id),
         userId: req.user.id
       });
-
+      
       const reply = await storage.createReply(validatedData);
       res.status(201).json(reply);
     } catch (error: any) {
@@ -202,21 +199,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
     try {
       const { content } = req.body;
-
+      
       if (!content) {
         return res.status(400).json({ message: "No content provided for transcription" });
       }
-
+      
       const transcribedContent = await transcribeContent(content);
       const structuredContent = await generateStructuredContent(transcribedContent);
-
+      
       const validatedData = insertTranscriptionSchema.parse({
         userId: req.user.id,
         title: structuredContent.title,
         content: JSON.stringify(structuredContent),
         originalContent: content
       });
-
+      
       const transcription = await storage.createTranscription(validatedData);
       res.status(201).json({
         transcription,
@@ -246,80 +243,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!stripe) {
         return res.status(500).json({ message: "Stripe is not configured" });
       }
-
+      
       const { amount } = req.body;
-
+      
       if (!amount) {
         return res.status(400).json({ message: "Amount is required" });
       }
-
+      
       const paymentIntent = await stripe.paymentIntents.create({
         amount: Math.round(amount * 100), // Convert to cents
         currency: "usd",
       });
-
+      
       res.json({ clientSecret: paymentIntent.client_secret });
     } catch (error: any) {
       res.status(500).json({ message: "Error creating payment intent: " + error.message });
     }
   });
-
-  // Chat API
-  const chatRouter = Router();
-  chatRouter.post("/", async (req, res) => {
-    try {
-      const { prompt } = req.body;
-      if (!prompt) {
-        return res.status(400).json({ error: "Prompt is required" });
-      }
-
-      const apiKey = process.env.OPENROUTER_API_KEY;
-      if (!apiKey) {
-        console.error('OpenRouter API key missing');
-        return res.status(500).json({ error: "API key not configured. Please check Secrets tool." });
-      }
-
-      console.log('Making request to OpenRouter API with key:', apiKey.substring(0, 10) + '...');
-      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
-          'HTTP-Referer': 'https://replit.com',
-          'X-Title': 'KnowledgeAI'
-        },
-        body: JSON.stringify({
-          model: "mistralai/mistral-7b-instruct",
-          messages: [{ role: "user", content: prompt }],
-          max_tokens: 300
-        })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error('OpenRouter API Error:', errorData);
-        return res.status(response.status).json({ 
-          error: errorData.error?.message || 'Failed to get response from AI service'
-        });
-      }
-
-      const data = await response.json();
-      if (!data.choices?.[0]?.message?.content) {
-        console.error('Invalid response format:', data);
-        return res.status(500).json({ error: 'Invalid response format from AI service' });
-      }
-
-      res.json({ 
-        response: data.choices[0].message.content,
-        videoIds: []
-      });
-    } catch (error) {
-      console.error('Chat API Error:', error);
-      res.status(500).json({ error: "Failed to process message" });
-    }
-  });
-  app.use("/api/chat", chatRouter);
-
 
   const httpServer = createServer(app);
 
