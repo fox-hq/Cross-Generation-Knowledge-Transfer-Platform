@@ -17,19 +17,19 @@ export default function Home() {
           <DropdownMenuTrigger className="inline-block bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 text-white font-semibold text-sm px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300">
             Start Now
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-48 bg-white/95 backdrop-blur-sm border border-neutral-200 shadow-lg rounded-lg p-1">
+          <DropdownMenuContent className="w-48 bg-neutral-900/95 backdrop-blur-sm border border-neutral-800 shadow-lg rounded-lg p-1">
             <DropdownMenuItem asChild>
-              <Link href="/explore?type=videos" className="cursor-pointer">
+              <Link href="/explore?type=videos" className="cursor-pointer text-white hover:text-gray-300 transition">
                 Videos
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/explore?type=ai" className="cursor-pointer">
+              <Link href="/explore?type=ai" className="cursor-pointer text-white hover:text-gray-300 transition">
                 Knowledge AI
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/explore?type=docs" className="cursor-pointer">
+              <Link href="/explore?type=docs" className="cursor-pointer text-white hover:text-gray-300 transition">
                 Retired Professional Docs
               </Link>
             </DropdownMenuItem>
