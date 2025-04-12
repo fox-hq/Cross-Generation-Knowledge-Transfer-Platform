@@ -1,9 +1,6 @@
 
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, FormEvent } from 'react';
 import MainLayout from "@/components/layout/main-layout";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Select } from "@/components/ui/select";
 
 export default function KnowledgeAIPage() {
   const [prompt, setPrompt] = useState('');
@@ -14,15 +11,6 @@ export default function KnowledgeAIPage() {
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedLanguage, setSelectedLanguage] = useState('en-US');
 
-  useEffect(() => {
-    function populateVoices() {
-      setVoices(window.speechSynthesis.getVoices());
-    }
-    
-    window.speechSynthesis.onvoiceschanged = populateVoices;
-    populateVoices();
-  }, []);
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
@@ -31,7 +19,6 @@ export default function KnowledgeAIPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt })
       });
-      
       const data = await response.json();
       setGptResponse(data.response);
       setVideoIds(data.videoIds || []);
@@ -62,11 +49,12 @@ export default function KnowledgeAIPage() {
     };
 
     recognition.onerror = (event: any) => {
-      setStatus("Error: " + event.error);
+      setStatus(`Error: ${event.error}`);
     };
   };
 
   const speakText = () => {
+    if (!gptResponse) return;
     stopSpeaking();
     const utterance = new SpeechSynthesisUtterance(gptResponse);
     utterance.lang = selectedLanguage;
@@ -90,33 +78,29 @@ export default function KnowledgeAIPage() {
 
         <div className="bg-white rounded-2xl p-8 shadow-lg border border-neutral-200 mb-8">
           <form onSubmit={handleSubmit}>
-            <Textarea
+            <textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="Type your question or click 'Speak' to use voice..."
-              className="min-h-[120px] mb-4"
+              className="w-full p-4 min-h-[120px] mb-4 border-2 border-neutral-200 rounded-lg"
             />
             
             <div className="flex flex-wrap gap-4">
-              <Button type="button" variant="outline" onClick={startListening}>
-                🎤 Speak
-              </Button>
-              <Button type="submit">
-                ✨ Ask AI
-              </Button>
-              <select 
-                className="px-3 py-2 border border-neutral-200 rounded-lg"
-                onChange={(e) => setSelectedVoice(voices[parseInt(e.target.value)])}
+              <button
+                type="button"
+                onClick={startListening}
+                className="px-6 py-3 bg-white border border-neutral-200 rounded-xl text-neutral-800 font-semibold hover:bg-neutral-50"
               >
-                {voices.map((voice, index) => (
-                  <option key={index} value={index}>
-                    {voice.name} ({voice.lang})
-                  </option>
-                ))}
-              </select>
+                🎤 Speak
+              </button>
+              <button
+                type="submit"
+                className="px-6 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700"
+              >
+                ✨ Ask AI
+              </button>
               <select
                 className="px-3 py-2 border border-neutral-200 rounded-lg"
-                value={selectedLanguage}
                 onChange={(e) => setSelectedLanguage(e.target.value)}
               >
                 <option value="en-US">English (US)</option>
@@ -140,12 +124,18 @@ export default function KnowledgeAIPage() {
               {gptResponse}
             </div>
             <div className="flex gap-4">
-              <Button variant="outline" onClick={speakText}>
+              <button
+                onClick={speakText}
+                className="px-6 py-3 bg-white border border-neutral-200 rounded-xl text-neutral-800 font-semibold hover:bg-neutral-50"
+              >
                 🔊 Listen
-              </Button>
-              <Button variant="outline" onClick={stopSpeaking}>
+              </button>
+              <button
+                onClick={stopSpeaking}
+                className="px-6 py-3 bg-white border border-neutral-200 rounded-xl text-neutral-800 font-semibold hover:bg-neutral-50"
+              >
                 ⏹️ Stop
-              </Button>
+              </button>
             </div>
           </div>
         )}
