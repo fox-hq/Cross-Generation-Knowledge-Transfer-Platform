@@ -1,6 +1,9 @@
 
 import { useState, useEffect, FormEvent } from 'react';
 import MainLayout from "@/components/layout/main-layout";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Select } from "@/components/ui/select";
 
 export default function KnowledgeAIPage() {
   const [prompt, setPrompt] = useState('');
@@ -78,41 +81,30 @@ export default function KnowledgeAIPage() {
   return (
     <MainLayout>
       <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from 
-          -indigo-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text">
+        <header className="text-center mb-12">
+          <h1 className="text-4xl md:text-6xl font-black mb-4 py-4 leading-tight tracking-tight bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text">
             AI Assistant
           </h1>
           <p className="text-neutral-600">Ask anything using voice or text</p>
-        </div>
+        </header>
 
         <div className="bg-white rounded-2xl p-8 shadow-lg border border-neutral-200 mb-8">
           <form onSubmit={handleSubmit}>
-            <textarea
+            <Textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="Type your question or click 'Speak' to use voice..."
-              className="w-full p-4 border-2 border-neutral-200 rounded-lg text-base 
-              resize-y min-h-[120px] mb-4"
+              className="min-h-[120px] mb-4"
             />
             
             <div className="flex flex-wrap gap-4">
-              <button
-                type="button"
-                onClick={startListening}
-                className="px-6 py-3 bg-white border border-neutral-200 
-                rounded-xl text-neutral-800 font-semibold hover:bg-neutral-50"
-              >
+              <Button type="button" variant="outline" onClick={startListening}>
                 🎤 Speak
-              </button>
-              <button
-                type="submit"
-                className="px-6 py-3 bg-indigo-600 text-white rounded-xl 
-                font-semibold hover:bg-indigo-700"
-              >
+              </Button>
+              <Button type="submit">
                 ✨ Ask AI
-              </button>
-              <select
+              </Button>
+              <select 
                 className="px-3 py-2 border border-neutral-200 rounded-lg"
                 onChange={(e) => setSelectedVoice(voices[parseInt(e.target.value)])}
               >
@@ -148,20 +140,12 @@ export default function KnowledgeAIPage() {
               {gptResponse}
             </div>
             <div className="flex gap-4">
-              <button
-                onClick={speakText}
-                className="px-6 py-3 bg-white border border-neutral-200 
-                rounded-xl text-neutral-800 font-semibold hover:bg-neutral-50"
-              >
+              <Button variant="outline" onClick={speakText}>
                 🔊 Listen
-              </button>
-              <button
-                onClick={stopSpeaking}
-                className="px-6 py-3 bg-white border border-neutral-200 
-                rounded-xl text-neutral-800 font-semibold hover:bg-neutral-50"
-              >
+              </Button>
+              <Button variant="outline" onClick={stopSpeaking}>
                 ⏹️ Stop
-              </button>
+              </Button>
             </div>
           </div>
         )}
