@@ -50,12 +50,6 @@ export function Header() {
                   <Link href="/retired-professionals" className="block">
                     <DropdownMenuItem>Retired Professional Docs</DropdownMenuItem>
                   </Link>
-                  <Link href="/3d-learning" className="block">
-                    <DropdownMenuItem>3D Learning</DropdownMenuItem>
-                  </Link>
-                  <Link href="/ai-mentor" className="block">
-                    <DropdownMenuItem>Realtime AI Mentor</DropdownMenuItem>
-                  </Link>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
@@ -122,12 +116,6 @@ export function Header() {
                   </Link>
                   <Link href="/retired-professionals" className="block">
                     <DropdownMenuItem>Retired Professional Docs</DropdownMenuItem>
-                  </Link>
-                  <Link href="/3d-learning" className="block">
-                    <DropdownMenuItem>3D Learning</DropdownMenuItem>
-                  </Link>
-                  <Link href="/ai-mentor" className="block">
-                    <DropdownMenuItem>Realtime AI Mentor</DropdownMenuItem>
                   </Link>
                 </DropdownMenuContent>
               </DropdownMenu>

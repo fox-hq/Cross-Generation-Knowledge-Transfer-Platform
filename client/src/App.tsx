@@ -33,11 +33,9 @@ export default function App() {
         <Route path="/knowledge-ai" component={KnowledgeAIPage} />
         <Route path="/retired-professionals" component={RetiredProfessionalsPage} />
             <Route path="/auth" component={AuthPage} />
-            <ProtectedRoute path="/marketplace" component={MarketplacePage} />
-            <ProtectedRoute path="/mentorship" component={MentorshipPage} />
-            <ProtectedRoute path="/community" component={CommunityPage} />
-            <ProtectedRoute path="/ai-mentor" component={AIMentorPage} />
-            <ProtectedRoute path="/validate-work" component={ValidateWorkPage} />
+            <Route path="/marketplace" component={MarketplacePage} />
+            <Route path="/mentorship" component={MentorshipPage} />
+            <Route path="/community" component={CommunityPage} />
             <Route path="/course/:id" component={CourseDetail} />
             <Route path="/transcribe" component={TranscriptionPage} />
             <Route path="/checkout" component={Checkout} />
