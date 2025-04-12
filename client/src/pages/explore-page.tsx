@@ -142,14 +142,14 @@ export default function ExplorePage() {
 
           <div className="bg-neutral-50 min-h-screen py-8">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-              <header className="text-center mb-24 py-12">
+              <header className="text-center mb-16 pt-8">
                 <h1 className="text-4xl md:text-6xl font-black mb-8 py-2 leading-tight tracking-tight bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 text-transparent bg-clip-text relative inline-block max-w-[90%] break-words">
                   Preserving Knowledge Across Generations
                 </h1>
               </header>
 
               {Object.entries(videos).map(([category, videoIds]) => (
-                <section key={category} className="mb-24">
+                <section key={category} className="mb-16">
                   <h2 className="text-2xl font-serif mb-12 pb-4 border-b-2 border-purple-500/20 text-neutral-900">
                     {categoryTitles[category as keyof typeof categoryTitles]}
                   </h2>
