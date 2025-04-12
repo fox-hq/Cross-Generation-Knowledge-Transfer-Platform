@@ -1,10 +1,11 @@
-
 import { useState } from "react";
 import { Link } from "wouter";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"; // Added import
+
 
 export function HomeHeader() {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,13 +29,32 @@ export function HomeHeader() {
         {/* Desktop Nav */}
         <nav className="hidden md:flex gap-6">
           {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-sm hover:underline transition"
-            >
-              {item.label}
-            </Link>
+            item.label === "Explore" ? (
+              <DropdownMenu key={item.href}>
+                <DropdownMenuTrigger className="text-sm hover:underline transition text-white">
+                  {item.label}
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem asChild>
+                    <Link href="/explore?type=videos">Videos</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/explore?type=ai">Knowledge AI</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/explore?type=docs">Retired Professional Docs</Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-sm hover:underline transition"
+              >
+                {item.label}
+              </Link>
+            )
           ))}
         </nav>
 
@@ -80,14 +100,33 @@ export function HomeHeader() {
       {isOpen && (
         <div className="md:hidden mt-2 flex flex-col gap-3 p-4 rounded-lg bg-black/80 backdrop-blur-sm text-white">
           {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-sm hover:text-gray-300"
-              onClick={() => setIsOpen(false)}
-            >
-              {item.label}
-            </Link>
+            item.label === "Explore" ? (
+              <DropdownMenu key={item.href}>
+                <DropdownMenuTrigger className="text-sm hover:underline transition text-white">
+                  {item.label}
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem asChild>
+                    <Link href="/explore?type=videos">Videos</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/explore?type=ai">Knowledge AI</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/explore?type=docs">Retired Professional Docs</Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-sm hover:text-gray-300"
+                onClick={() => setIsOpen(false)}
+              >
+                {item.label}
+              </Link>
+            )
           ))}
           {user ? (
             <Button 
