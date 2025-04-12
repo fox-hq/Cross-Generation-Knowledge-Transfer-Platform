@@ -1,29 +1,3 @@
-
-/* Responsive styles */
-@media screen and (max-width: 640px) {
-  .spline-container {
-    transform: scale(0.7);
-  }
-}
-
-@media screen and (min-width: 641px) and (max-width: 768px) {
-  .spline-container {
-    transform: scale(0.8);
-  }
-}
-
-@media screen and (min-width: 769px) and (max-width: 1024px) {
-  .spline-container {
-    transform: scale(0.9);
-  }
-}
-
-@media screen and (min-width: 1025px) {
-  .spline-container {
-    transform: scale(1);
-  }
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
