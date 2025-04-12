@@ -133,47 +133,8 @@ export default function ExplorePage() {
 
   return (
     <MainLayout>
-      <div className="pt-20 bg-neutral-50 min-h-screen py-10 px-4 sm:px-6 lg:px-8">
+      <div className="bg-neutral-50 min-h-screen py-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-neutral-900 mb-2">
-              Explore Knowledge Paths
-            </h1>
-            <p className="text-neutral-600 max-w-2xl">
-              Discover timeless courses crafted by master artisans and craftspeople from generations past.
-            </p>
-          </div>
-
-          {/* Search + Filter */}
-          <div className="flex flex-col lg:flex-row gap-4 mb-8">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 h-4 w-4" />
-              <Input
-                type="search"
-                placeholder="Search courses..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10"
-              />
-            </div>
-            <div className="lg:w-64">
-              <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                <SelectTrigger>
-                  <div className="flex items-center">
-                    <Filter className="mr-2 h-4 w-4" />
-                    <SelectValue placeholder="Filter by category" />
-                  </div>
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map((category) => (
-                    <SelectItem key={category} value={category}>
-                      {category === "all" ? "All Categories" : category}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
 
           {/* Loading or Error */}
           {loading && <LoadingPage />}
