@@ -11,6 +11,7 @@ import { ProtectedRoute } from "./lib/protected-route";
 
 const HomePage = lazy(() => import("./pages/home-page"));
 const VideosPage = lazy(() => import("./pages/videos-page"));
+const ValidateWorkPage = lazy(() => import("./pages/validate-work-page"));
 const KnowledgeAIPage = lazy(() => import("./pages/knowledge-ai-page"));
 const RetiredProfessionalsPage = lazy(() => import("./pages/retired-professionals-page"));
 const AuthPage = lazy(() => import("./pages/auth-page"));
