@@ -34,21 +34,22 @@ export default function KnowledgeAIPage() {
         body: JSON.stringify({ prompt })
       });
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
       const data = await response.json();
-      if (!data || !data.response) {
-        throw new Error('Invalid response format');
+      
+      if (!response.ok) {
+        throw new Error(data.message || `HTTP error! status: ${response.status}`);
       }
       
-      setGptResponse(data.response);
+      if (data.error) {
+        throw new Error(data.error);
+      }
+      
+      setGptResponse(data.response || '');
       setVideoIds(data.videoIds || []);
       setStatus('');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error:', error);
-      setStatus('Failed to get response. Please try again.');
+      setStatus(error.message || 'Failed to get response. Please try again.');
     }
   };
 
