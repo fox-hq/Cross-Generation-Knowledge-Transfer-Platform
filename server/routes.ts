@@ -40,35 +40,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.get("/api/courses/:id", async (req, res) => {
-
-  app.post("/api/chat", async (req, res) => {
-    try {
-      if (!req.body.prompt) {
-        return res.status(400).json({ error: "Prompt is required" });
-      }
-
-      // Process the chat request
-      const response = await openai.chat.completions.create({
-        model: "gpt-4o",
-        messages: [
-          {
-            role: "user",
-            content: req.body.prompt
-          }
-        ]
-      });
-
-      res.json({
-        response: response.choices[0].message.content,
-        videoIds: [] // Add video IDs if needed
-      });
-    } catch (error: any) {
-      console.error("Chat API Error:", error);
-      res.status(500).json({ error: error.message });
-    }
-  });
-
-
     try {
       const course = await storage.getCourse(Number(req.params.id));
       if (!course) {
