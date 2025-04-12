@@ -19,6 +19,9 @@ export default function CreateCoursePage() {
     category: "",
     price: "",
     duration: "",
+    imageUrl: "https://images.unsplash.com/photo-1544377193-33dcf4d68fb5",
+    instructorId: 1,
+    lessonCount: 1
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
