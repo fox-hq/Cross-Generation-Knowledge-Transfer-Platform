@@ -43,7 +43,7 @@ export function HomeHeader() {
           {user ? (
             <div className="flex items-center gap-4">
               <Avatar>
-                <AvatarFallback className="bg-white text-black">
+                <AvatarFallback className="bg-primary text-white">
                   {user.username[0].toUpperCase()}
                 </AvatarFallback>
               </Avatar>

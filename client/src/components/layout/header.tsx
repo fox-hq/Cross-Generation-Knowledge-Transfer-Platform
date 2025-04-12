@@ -44,7 +44,9 @@ export function Header() {
           {user ? (
             <div className="flex items-center gap-4">
               <Avatar>
-                <AvatarFallback>{user.username[0].toUpperCase()}</AvatarFallback>
+                <AvatarFallback className="bg-primary text-white">
+                  {user.username[0].toUpperCase()}
+                </AvatarFallback>
               </Avatar>
               <Button 
                 variant="ghost" 
