@@ -37,18 +37,18 @@ export default function KnowledgeAIPage() {
         body: JSON.stringify({ prompt })
       });
       
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes('application/json')) {
-        throw new Error('Server returned non-JSON response');
-      }
-
       const data = await response.json();
       
       if (!response.ok) {
-        throw new Error(data.message || `HTTP error! status: ${response.status}`);
+        console.error("API Error:", data);
+        throw new Error(data.error || data.message || `HTTP error! status: ${response.status}`);
       }
       
-      setGptResponse(data.response || '');
+      if (!data.response) {
+        throw new Error("Invalid response format from server");
+      }
+      
+      setGptResponse(data.response);
       setVideoIds(data.videoIds || []);
       setStatus('');
     } catch (error: any) {
