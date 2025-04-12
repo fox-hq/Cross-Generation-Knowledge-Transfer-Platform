@@ -1,0 +1,268 @@
+<?php
+// Your YouTube Data API v3 key
+$apiKey = 'AIzaSyBhVNCopqLEDj4NrOY06qzEWhHSKsBzWsA';
+
+// Arrays of YouTube video IDs categorized
+$videos = [
+    'trades' => [
+        'tfGYR07Tgr4',
+        'BorBwJD1_xI',
+        'Hpqmcp-nKhk',
+    ],
+    'crafts' => [
+        'ozMXZORhBJk',
+        '23UIklqkc-Y',
+        'zHR5_jYxHNg',
+    ],
+    'culture' => [
+        'n2v42MAA6FY',
+        'O030fzDUAOw',
+        'EZjb5N0vkDE',
+    ],
+];
+
+function fetchVideoTitles($videoIds, $apiKey) {
+    $titles = [];
+    $ids = implode(',', $videoIds);
+    $apiUrl = "https://www.googleapis.com/youtube/v3/videos?part=snippet&id={$ids}&key={$apiKey}";
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $apiUrl);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $apiResponse = curl_exec($ch);
+    curl_close($ch);
+
+    if ($apiResponse) {
+        $data = json_decode($apiResponse, true);
+        if (isset($data['items'])) {
+            foreach ($data['items'] as $item) {
+                $videoId = $item['id'];
+                $title = $item['snippet']['title'];
+                $titles[$videoId] = $title;
+            }
+        }
+    }
+    return $titles;
+}
+
+$allVideoIds = array_merge(...array_values($videos));
+$videoTitles = fetchVideoTitles($allVideoIds, $apiKey);
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preserving Knowledge Across Generations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --background-color: #fafafa;
+            --card-background: #ffffff;
+            --accent-color: #8b5cf6;
+            --accent-gradient: linear-gradient(135deg, #8b5cf6, #6947e1);
+            --shadow-color: rgba(0, 0, 0, 0.15);
+            --spacing-unit: 1rem;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--background-color);
+            color: var(--primary-color);
+            line-height: 1.6;
+            padding: calc(var(--spacing-unit) * 2);
+            background-image: 
+                radial-gradient(circle at 100% 100%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 0% 0%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: calc(var(--spacing-unit) * 6);
+            padding: calc(var(--spacing-unit) * 3);
+        }
+
+        h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            background-image: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #6366f1 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: var(--accent-gradient);
+            border-radius: 2px;
+        }
+
+        .category {
+            margin-bottom: calc(var(--spacing-unit) * 6);
+        }
+
+        .category-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: calc(var(--spacing-unit) * 3);
+            padding-bottom: var(--spacing-unit);
+            border-bottom: 2px solid rgba(139, 92, 246, 0.2);
+            color: var(--primary-color);
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: calc(var(--spacing-unit) * 2);
+        }
+
+        .video-card {
+            background: var(--card-background);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 
+                0 10px 30px var(--shadow-color),
+                0 1px 2px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            position: relative;
+            isolation: isolate;
+        }
+
+        .video-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--accent-gradient);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .video-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: transparent;
+        }
+
+        .video-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            background: #000;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            transition: var(--transition);
+        }
+
+        .video-info {
+            padding: calc(var(--spacing-unit) * 2);
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0.9),
+                rgba(255, 255, 255, 1)
+            );
+            backdrop-filter: blur(10px);
+        }
+
+        .video-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--primary-color);
+            margin-top: var(--spacing-unit);
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: var(--spacing-unit);
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .category-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Preserving Knowledge Across Generations</h1>
+        </header>
+
+        <?php
+        $categoryTitles = [
+            'trades' => '🛠️ Disappearing Trades',
+            'crafts' => '🎨 Traditional Crafts',
+            'culture' => '🌍 Cultural Practices & Mentorship'
+        ];
+
+        foreach ($videos as $category => $videoIds): ?>
+            <section class="category">
+                <h2 class="category-title"><?php echo $categoryTitles[$category]; ?></h2>
+                <div class="video-grid">
+                    <?php foreach ($videoIds as $videoId): ?>
+                        <div class="video-card">
+                            <div class="video-wrapper">
+                                <iframe 
+                                    src="https://www.youtube.com/embed/<?php echo htmlspecialchars($videoId); ?>"
+                                    title="<?php echo htmlspecialchars($videoTitles[$videoId] ?? 'YouTube Video'); ?>"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div class="video-info">
+                                <h3 class="video-title"><?php echo htmlspecialchars($videoTitles[$videoId] ?? 'Video Title'); ?></h3>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </section>
+        <?php endforeach; ?>
+    </div>
+</body>
+</html>
