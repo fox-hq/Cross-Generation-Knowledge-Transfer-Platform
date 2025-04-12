@@ -36,28 +36,35 @@ export default function VideosPage() {
 
     const fetchVideoTitles = async () => {
       const allVideoIds = Object.values(videos).flat();
-      const idsString = allVideoIds.join(',');
+      const batchSize = 10;
       const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY;
+      const titles: Record<string, string> = {};
 
       try {
-        const response = await fetch(
-          `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${idsString}&key=${apiKey}`,
-          { signal: controller.signal }
-        );
-        if (!response.ok) throw new Error('Failed to fetch video titles');
-        const data = await response.json();
-
-        if (mounted) {
-          const titles: Record<string, string> = {};
+        for (let i = 0; i < allVideoIds.length; i += batchSize) {
+          if (!mounted) break;
+          
+          const batchIds = allVideoIds.slice(i, i + batchSize);
+          const idsString = batchIds.join(',');
+          
+          const response = await fetch(
+            `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${idsString}&key=${apiKey}`,
+            { signal: controller.signal }
+          );
+          
+          if (!response.ok) throw new Error('Failed to fetch video titles');
+          const data = await response.json();
+          
           data.items?.forEach((item: any) => {
             titles[item.id] = item.snippet.title;
           });
-          setVideoTitles(titles);
+          
+          if (mounted) {
+            setVideoTitles(prev => ({ ...prev, ...titles }));
+          }
         }
       } catch (error) {
-        if (error instanceof Error && error.name === 'AbortError') {
-          return;
-        }
+        if (error instanceof Error && error.name === 'AbortError') return;
         console.error('Error fetching video titles:', error);
       }
     };

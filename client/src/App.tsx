@@ -5,25 +5,29 @@ import { queryClient } from "./lib/queryClient";
 import { AuthProvider } from "./hooks/use-auth";
 import { Toaster } from "./components/ui/toaster";
 import MainLayout from "./components/layout/main-layout";
-import HomePage from "./pages/home-page";
-import VideosPage from "./pages/videos-page";
-import KnowledgeAIPage from "./pages/knowledge-ai-page";
-import RetiredProfessionalsPage from "./pages/retired-professionals-page";
-import AuthPage from "./pages/auth-page";
-import MarketplacePage from "./pages/marketplace-page";
-import MentorshipPage from "./pages/mentorship-page";
-import CommunityPage from "./pages/community-page";
-import CourseDetail from "./pages/course-detail";
-import TranscriptionPage from "./pages/transcription-page";
-import Checkout from "./pages/checkout";
-import NotFound from "./pages/not-found";
+import { Suspense, lazy } from "react";
+import { LoadingPage } from "./components/ui/loading";
+
+const HomePage = lazy(() => import("./pages/home-page"));
+const VideosPage = lazy(() => import("./pages/videos-page"));
+const KnowledgeAIPage = lazy(() => import("./pages/knowledge-ai-page"));
+const RetiredProfessionalsPage = lazy(() => import("./pages/retired-professionals-page"));
+const AuthPage = lazy(() => import("./pages/auth-page"));
+const MarketplacePage = lazy(() => import("./pages/marketplace-page"));
+const MentorshipPage = lazy(() => import("./pages/mentorship-page"));
+const CommunityPage = lazy(() => import("./pages/community-page"));
+const CourseDetail = lazy(() => import("./pages/course-detail"));
+const TranscriptionPage = lazy(() => import("./pages/transcription-page"));
+const Checkout = lazy(() => import("./pages/checkout"));
+const NotFound = lazy(() => import("./pages/not-found"));
 
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <MainLayout>
-          <Switch>
+          <Suspense fallback={<LoadingPage />}>
+            <Switch>
             <Route path="/" component={HomePage} />
             <Route path="/videos" component={VideosPage} />
         <Route path="/knowledge-ai" component={KnowledgeAIPage} />
@@ -37,6 +41,7 @@ export default function App() {
             <Route path="/checkout" component={Checkout} />
             <Route component={NotFound} />
           </Switch>
+          </Suspense>
         </MainLayout>
         <Toaster />
       </AuthProvider>
