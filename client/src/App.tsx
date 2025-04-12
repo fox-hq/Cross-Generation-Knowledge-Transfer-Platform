@@ -7,6 +7,7 @@ import { Toaster } from "./components/ui/toaster";
 import MainLayout from "./components/layout/main-layout";
 import { Suspense, lazy } from "react";
 import { LoadingPage } from "./components/ui/loading";
+import { ProtectedRoute } from "./lib/protected-route";
 
 const HomePage = lazy(() => import("./pages/home-page"));
 const VideosPage = lazy(() => import("./pages/videos-page"));
