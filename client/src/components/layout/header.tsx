@@ -2,9 +2,14 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/use-auth";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useToast } from "@/hooks/use-toast";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, logoutMutation } = useAuth();
+  const { toast } = useToast();
 
   const navItems = [
     { label: "Explore", href: "/explore" },
@@ -36,13 +41,25 @@ export function Header() {
 
         {/* Sign In Button */}
         <div className="hidden md:block">
-          <Button
-            asChild
-            variant="outline"
-            className="border border-black text-black bg-transparent hover:bg-black hover:text-white transition"
-          >
-            <Link href="/auth">Sign In</Link>
-          </Button>
+          {user ? (
+            <div className="flex items-center gap-4">
+              <Avatar>
+                <AvatarFallback>{user.username[0].toUpperCase()}</AvatarFallback>
+              </Avatar>
+              <Button 
+                variant="ghost" 
+                onClick={() => {
+                  logoutMutation.mutate();
+                }}
+              >
+                Sign Out
+              </Button>
+            </div>
+          ) : (
+            <Button asChild variant="ghost">
+              <Link href="/auth">Sign In</Link>
+            </Button>
+          )}
         </div>
 
         {/* Mobile Menu Icon */}
@@ -67,13 +84,25 @@ export function Header() {
               {item.label}
             </Link>
           ))}
-          <Link
-            href="/auth"
-            className="border border-black text-black text-sm px-4 py-1 rounded-md hover:bg-black hover:text-white transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Sign In
-          </Link>
+          {user ? (
+            <Button 
+              variant="ghost" 
+              onClick={() => {
+                logoutMutation.mutate();
+                setIsOpen(false);
+              }}
+            >
+              Sign Out
+            </Button>
+          ) : (
+            <Link
+              href="/auth"
+              className="border border-black text-black text-sm px-4 py-1 rounded-md hover:bg-black hover:text-white transition"
+              onClick={() => setIsOpen(false)}
+            >
+              Sign In
+            </Link>
+          )}
         </div>
       )}
     </header>
