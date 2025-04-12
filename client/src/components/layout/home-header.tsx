@@ -1,14 +1,19 @@
+
 import { useState } from "react";
 import { Link } from "wouter";
 import { Menu } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/use-auth";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export function HomeHeader() {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, logoutMutation } = useAuth();
 
   const navItems = [
     { label: "Explore", href: "/explore" },
     { label: "Mentorship", href: "/mentorship" },
-    { label: "Forum", href: "/community" },
+    { label: "Community", href: "/community" },
     { label: "Marketplace", href: "/marketplace" },
   ];
 
@@ -34,12 +39,33 @@ export function HomeHeader() {
         </nav>
 
         {/* Sign In */}
-        <Link
-          href="/auth"
-          className="hidden md:inline-block border border-white text-white px-4 py-1 rounded-md text-sm hover:bg-white hover:text-black transition"
-        >
-          Sign In
-        </Link>
+        <div className="hidden md:block">
+          {user ? (
+            <div className="flex items-center gap-4">
+              <Avatar>
+                <AvatarFallback className="bg-primary text-white">
+                  {user.username[0].toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+              <Button 
+                variant="outline"
+                className="text-white border-white hover:bg-white hover:text-black"
+                onClick={() => {
+                  logoutMutation.mutate();
+                }}
+              >
+                Sign Out
+              </Button>
+            </div>
+          ) : (
+            <Link
+              href="/auth"
+              className="inline-block border border-white text-white px-4 py-1 rounded-md hover:bg-white hover:text-black transition"
+            >
+              Sign In
+            </Link>
+          )}
+        </div>
 
         {/* Mobile Menu Icon */}
         <button
@@ -52,7 +78,7 @@ export function HomeHeader() {
 
       {/* Mobile Nav */}
       {isOpen && (
-        <div className="md:hidden mt-2 flex flex-col gap-3 p-4 rounded-lg bg-transparent text-white">
+        <div className="md:hidden mt-2 flex flex-col gap-3 p-4 rounded-lg bg-black/80 backdrop-blur-sm text-white">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -63,13 +89,26 @@ export function HomeHeader() {
               {item.label}
             </Link>
           ))}
-          <Link
-            href="/auth"
-            className="border border-white text-white text-sm px-4 py-1 rounded-md hover:bg-white hover:text-black transition"
-            onClick={() => setIsOpen(false)}
-          >
-            Sign In
-          </Link>
+          {user ? (
+            <Button 
+              variant="outline"
+              className="text-white border-white hover:bg-white hover:text-black"
+              onClick={() => {
+                logoutMutation.mutate();
+                setIsOpen(false);
+              }}
+            >
+              Sign Out
+            </Button>
+          ) : (
+            <Link
+              href="/auth"
+              className="border border-white text-white text-sm px-4 py-1 rounded-md hover:bg-white hover:text-black transition"
+              onClick={() => setIsOpen(false)}
+            >
+              Sign In
+            </Link>
+          )}
         </div>
       )}
     </header>
