@@ -20,7 +20,7 @@ Submission for SD-1: Building a system that preserves and transfers specialized 
 
 🌉 Project Overview
 
-KnowledgeBridge and GPT Test together form an integrated solution for lifelong learning, skill preservation, and generational knowledge transfer using AI, modern web tech, and interactive education tools.
+KnowledgeBridge is a solution for lifelong learning, skill preservation, and generational knowledge transfer using AI, modern web tech, and interactive education tools.
 🧰 Technologies Used
 Category	Tools / Frameworks
 Frontend	Tailwind CSS, HTML, JS/TS, Replit IDE
@@ -79,9 +79,8 @@ KnowledgeBridge/
 ├── package.json                   # Node dependencies
 └── src/                           # Main app code (React, APIs)
 
-gpt-test/
 ├── AI_Assist_documnt.php          # GPT-based documentation tool
-├── apis.php                       # API router
+├── apis.php                       # API Used
 ├── database.php                   # DB connection logic
 ├── insert_marketplace.php         # Marketplace feature
 ├── Intractive_learning.php        # Learning module engine
@@ -99,7 +98,6 @@ npm run dev
 
 GPT Backend (PHP)
 
-cd gpt-test
 composer install
 php -S localhost:8000
 
@@ -151,7 +149,7 @@ Submission for SD-1: Building a system that preserves and transfers specialized 
 
 🌉 Project Overview
 
-KnowledgeBridge and GPT Test together form an integrated solution for lifelong learning, skill preservation, and generational knowledge transfer using AI, modern web tech, and interactive education tools.
+KnowledgeBridge solution for lifelong learning, skill preservation, and generational knowledge transfer using AI, modern web tech, and interactive education tools.
 🧰 Technologies Used
 Category	Tools / Frameworks
 Frontend	Tailwind CSS, HTML, JS/TS, Replit IDE
@@ -209,8 +207,7 @@ KnowledgeBridge/
 ├── tailwind.config.ts             # Tailwind UI setup
 ├── package.json                   # Node dependencies
 └── src/                           # Main app code (React, APIs)
-
-gpt-test/
+PHP_Code
 ├── AI_Assist_documnt.php          # GPT-based documentation tool
 ├── apis.php                       # API router
 ├── database.php                   # DB connection logic
@@ -229,9 +226,7 @@ npm run dev
 
     Visit http://localhost:3000 or the Replit live link.
 
-GPT Backend (PHP)
 
-cd gpt-test
 composer install
 php -S localhost:8000
 
